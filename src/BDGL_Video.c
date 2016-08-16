@@ -63,6 +63,7 @@ void BDGL_DestroyScreen(BDGL_Screen *screen)
     {
         BDGL_SetVideoMode(BDGL_MODE_TEXT_640x200_16_COLOR);
         free(screen);
+        screen = NULL;
     }
 }
 
