@@ -4,9 +4,8 @@ A work-in-progress C library for DOS game programming, currently containing DOS 
 ## How to build the library:
 
 1. Download and install [Open Watcom 1.9](ftp://ftp.openwatcom.org/pub/open-watcom-c-win32-1.9.exe) under Windows.
-2. Download and install [DOSBox](https://www.dosbox.com/download.php?main=1) under any platform.
-3. `git clone https://github.com/balintkiss501/BDGL`
-4. Build the library using `wmake all`. This will create the linkable static library `BDGL.lib` under the `lib` folder.
+2. `git clone https://github.com/balintkiss501/BDGL`
+3. Build the library using `wmake all`. This will create the linkable static library `BDGL.lib` under the `lib` folder.
 
 ## How to use the library:
 
@@ -16,6 +15,7 @@ See "examples/HelloWorld.c" for usage of the API. To compile your program with t
 wcl -ml -I<directory of BDGL header files> yourprogram.c BDGL.lib
 ```
 
+Then you'll be able to run your executable in DOSBox.
 
 References:
 
