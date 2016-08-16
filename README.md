@@ -17,7 +17,7 @@ wcl -ml -I<directory of BDGL header files> yourprogram.c BDGL.lib
 
 Then you'll be able to run your executable in DOSBox.
 
-References:
+## References:
 
 * <ftp://ftp.openwatcom.org/pub/manuals/current/cguide.pdf>
 * <http://www.brackeen.com/vga/>
