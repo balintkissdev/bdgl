@@ -9,7 +9,7 @@
 
 /* Check if x and y are within screen boundaries */
 #define WITHIN_SCREEN_BOUNDARIES(screen, x, y) \
-    (-1 < (x) && (x) < (screen)->width && -1 < (y) && (screen)->height)
+    ((-1 < (x)) && ((x) < (screen)->width) && (-1 < (y)) && ((screen)->height))
 
 /**
  * Set video mode. This operation is encapsulated.
@@ -38,7 +38,7 @@ static void BDGL_SetVideoMode(const BDGL_BYTE video_mode)
 // FIXME: needs a better way to parse parameters rather than using switch-case
 BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode)
 {
-    BDGL_Screen *screen = (BDGL_Screen *)malloc(sizeof(BDGL_Screen));
+    BDGL_Screen *screen = malloc(sizeof BDGL_Screen);
     screen->mode = video_mode;
     switch (video_mode)
     {
