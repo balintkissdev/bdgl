@@ -55,6 +55,14 @@ enum BDGL_Colors
     BDGL_WHITE
 };
 
+enum BDGL_ScreenFlags
+{
+    BDGL_SCREEN_DEFAULT                    = 0x00,
+    BDGL_SCREEN_ENABLE_VSYNC,
+    BDGL_SCREEN_ENABLE_DOUBLE_BUFFER
+};
+
+
 /* Data structure of the screen */
 typedef struct BDGL_Screen
 {
@@ -63,6 +71,8 @@ typedef struct BDGL_Screen
     BDGL_WORD color_number;         // Number of available colors
     BDGL_BYTE current_draw_color;   // Current drawing color
     BDGL_BYTE *vga_memory;          // Address of VGA memory
+    BDGL_BYTE *buffer;              // Double buffer
+    BDGL_BYTE flags;                // Bit flags
 } BDGL_Screen;
 
 /* Rectagular shape */
@@ -88,9 +98,20 @@ typedef struct BDGL_Vertex
  *
  * @param video_mode    identifier for the video mode, for example 
  *                      "BDGL_MODE_VGA_320x200_256_COLOR" for 256 VGA mode.
+ * @param flags         bit flags to customize screen properties. The following values can be set:
+ *
+ *                      BDGL_SCREEN_DEFAULT:                Nothing. This means disabling
+ *                                                          VSync and double buffering
+ *                      BDGL_SCREEN_ENABLE_VSYNC:           Enable wait for vertical retrace (VSync)
+ *                      BDGL_SCREEN_ENABLE_DOUBLE_BUFFER:   Enable double buffering
+ *
+ *                      These flags can be chained together, for example
+ *
+ *                      BDGL_SCREEN_ENABLE_VSYNC | BDGL_SCREEN_ENABLE_DOUBLE_BUFFER
+ *
  * @return              pointer to allocated screen resources
  */
-BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode);
+BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode, const BDGL_BYTE flags);
 
 /**
  * Free screen resources. This also nullifies the pointer pointing to it
@@ -113,6 +134,15 @@ void BDGL_InitializeVideo(BDGL_Screen *screen);
  * @param screen        screen pointer to be cleared
  */
 void BDGL_ClearScreen(BDGL_Screen *screen);
+
+/**
+ * Update screen with double buffering. Until this call, every pixel is written into
+ * a temporary buffer before displaying.
+ * This also includes waiting for vertical retrace (VSync)
+ *
+ * @param               screen to update
+ */
+void BDGL_UpdateScreen(BDGL_Screen *screen);
 
 /**
  * Set drawing color to draw primitives with.

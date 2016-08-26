@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
     int x, y;               // Variables for point
     int x1, y1, x2, y2;     // Variables for line
-    int i;                  // Loop variable
+    BDGL_WORD i;            // Loop variable
 
     BDGL_Rectangle rect;    // Rectangle
 
@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
 	};
 
     // Create screen
-    BDGL_Screen *screen = BDGL_CreateScreen(BDGL_MODE_VGA_320x200_256_COLOR);
+    BDGL_Screen *screen = BDGL_CreateScreen(BDGL_MODE_VGA_320x200_256_COLOR, BDGL_SCREEN_DEFAULT);
+    
     if (screen)
     {
         // Initialize and display screen
@@ -43,6 +44,7 @@ int main(int argc, char *argv[])
         BDGL_DrawPoint(screen, 0, 5);
         BDGL_SetDrawColor(screen, BDGL_RED);
         BDGL_DrawPoint(screen, -20, -10);     // Test for drawing outside screen
+        BDGL_UpdateScreen(screen);
         delay(4000);
         BDGL_ClearScreen(screen);
 
@@ -53,6 +55,7 @@ int main(int argc, char *argv[])
             y = rand() % screen->height;
             BDGL_SetDrawColor(screen, rand() % screen->color_number);
             BDGL_DrawPoint(screen, x, y);
+            BDGL_UpdateScreen(screen);
         }
         BDGL_ClearScreen(screen);
 
@@ -66,6 +69,7 @@ int main(int argc, char *argv[])
 
             BDGL_SetDrawColor(screen, rand() % screen->color_number);
             BDGL_DrawLine(screen, x1, y1, x2, y2);
+            BDGL_UpdateScreen(screen);
         }
         BDGL_ClearScreen(screen);
 
@@ -79,6 +83,7 @@ int main(int argc, char *argv[])
 
             BDGL_SetDrawColor(screen, rand() % screen->color_number);
             BDGL_DrawRectangle(screen, &rect);
+            BDGL_UpdateScreen(screen);
         }
         BDGL_ClearScreen(screen);
 
@@ -99,6 +104,7 @@ int main(int argc, char *argv[])
         // Draw polygons
         BDGL_SetDrawColor(screen, BDGL_LIGHT_BLUE);
         BDGL_DrawPolygon(screen, BDGL_GetArrayLength(vertices), vertices);
+        BDGL_UpdateScreen(screen);
         delay(4000);
 
         // The end: free screen resources

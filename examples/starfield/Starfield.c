@@ -6,11 +6,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-#include <dos.h>
 
 #include <BDGL.H>
 
-#define STAR_NUMBER     25
+#define STAR_NUMBER         256
+#define STAR_BASE_SPEED     0.7f
 
 // Star data type
 typedef struct Star
@@ -25,7 +25,8 @@ Star stars[STAR_NUMBER];
 int main(int argc, char *argv[])
 {
     // Create screen
-    BDGL_Screen *screen = BDGL_CreateScreen(BDGL_MODE_VGA_320x200_256_COLOR);
+    BDGL_Screen *screen = BDGL_CreateScreen(BDGL_MODE_VGA_320x200_256_COLOR,
+            BDGL_SCREEN_ENABLE_VSYNC | BDGL_SCREEN_ENABLE_DOUBLE_BUFFER);
 
     // Initialize starfield
     int i;
@@ -47,13 +48,14 @@ int main(int argc, char *argv[])
         // Loop until key on keyboard is pressed
         while (!kbhit())
         {
+            // Clear screen to blank
             BDGL_ClearScreen(screen);
 
             // For each star
             for (i = 0; i < STAR_NUMBER; ++i)
             {
                 // Move current star forward from left to right
-                stars[i].x += (1 + (float)stars[i].plane) * 0.15f;
+                stars[i].x += (1 + (float)stars[i].plane) * STAR_BASE_SPEED;
 
                 // Reset current star if it left the screen
                 if (stars[i].x > screen->width)
@@ -65,6 +67,9 @@ int main(int argc, char *argv[])
                 // Draw current star
                 BDGL_DrawPoint(screen, stars[i].x, stars[i].y);
             }
+
+            // Refresh screen
+            BDGL_UpdateScreen(screen);
         }
 
         // Free screen resources

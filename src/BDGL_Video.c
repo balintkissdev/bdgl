@@ -2,10 +2,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <dos.h>
+#include <string.h>
 
 /* BIOS video interrupts */
 #define BDGL_BIOS_VIDEO_INTERRUPT        (0x10)
 #define BDGL_BIOS_VIDEO_SET_MODE         (0x00)
+
+/* VGA status */
+#define VGA_CRT_INPUT_STATUS_1           (0x03da)
+#define VGA_STATUS_VRETRACE              (0x08)
 
 /* Check if x and y are within screen boundaries */
 #define WITHIN_SCREEN_BOUNDARIES(screen, x, y) \
@@ -36,7 +42,7 @@ static void BDGL_SetVideoMode(const BDGL_BYTE video_mode)
 
 // TODO: currently only supports 256 VGA mode
 // FIXME: needs a better way to parse parameters rather than using switch-case
-BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode)
+BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode, const BDGL_BYTE flags)
 {
     BDGL_Screen *screen = malloc(sizeof(BDGL_Screen));
     screen->mode = video_mode;
@@ -47,7 +53,19 @@ BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode)
             screen->height = 200;
             screen->color_number = 256;
             screen->current_draw_color = BDGL_BLACK;
+
+            screen->flags |= flags;
+
             screen->vga_memory = (BDGL_BYTE *)MK_FP(BDGL_VGA_ADDRESS,0);
+            if (screen->flags & BDGL_SCREEN_ENABLE_DOUBLE_BUFFER)
+            {
+                screen->buffer = calloc(screen->width * screen->height, 1);
+            }
+            else
+            {
+                screen->buffer = screen->vga_memory;
+            }
+
             break;
 
         default:
@@ -63,6 +81,10 @@ void BDGL_DestroyScreen(BDGL_Screen *screen)
     if (screen)
     {
         BDGL_SetVideoMode(BDGL_MODE_TEXT_640x200_16_COLOR);
+        if (screen->flags & BDGL_SCREEN_ENABLE_DOUBLE_BUFFER)
+        {
+            free(screen->buffer);
+        }
         free(screen);
     }
 }
@@ -74,7 +96,23 @@ void BDGL_InitializeVideo(BDGL_Screen *screen)
 
 void BDGL_ClearScreen(BDGL_Screen *screen)
 {
-    BDGL_SetVideoMode(screen->mode);
+    memset(screen->buffer, 0, screen->width * screen->height);
+}
+
+void BDGL_UpdateScreen(BDGL_Screen *screen)
+{
+    // Wait for vertical retrace
+    if (screen->flags & BDGL_SCREEN_ENABLE_VSYNC)
+    {
+        while (inp(VGA_CRT_INPUT_STATUS_1) & VGA_STATUS_VRETRACE);
+        while (!inp(VGA_CRT_INPUT_STATUS_1) & VGA_STATUS_VRETRACE);
+    }
+
+    // Flip buffer
+    if (screen->flags & BDGL_SCREEN_ENABLE_DOUBLE_BUFFER)
+    {
+        memcpy(screen->vga_memory, screen->buffer, screen->width * screen->height);
+    }
 }
 
 void BDGL_SetDrawColor(BDGL_Screen *screen, const BDGL_BYTE color)
@@ -85,7 +123,7 @@ void BDGL_SetDrawColor(BDGL_Screen *screen, const BDGL_BYTE color)
 void BDGL_DrawPoint(BDGL_Screen *screen, int x, int y)
 {
     if (WITHIN_SCREEN_BOUNDARIES(screen, x, y))    // Makes sure doesn't wrap around screen
-        screen->vga_memory[(y << 8) + (y << 6) + x] = screen->current_draw_color;
+        screen->buffer[(y << 8) + (y << 6) + x] = screen->current_draw_color;
 }
 
 void BDGL_DrawLine(BDGL_Screen *screen, int x_start, int y_start,  int x_end, int y_end)
@@ -168,14 +206,14 @@ void BDGL_DrawRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle)
 
     for (i = left; i <= right; i++)
     {
-        screen->vga_memory[top_offset + i] = screen->current_draw_color;
-        screen->vga_memory[bottom_offset + i] = screen->current_draw_color;
+        screen->buffer[top_offset + i] = screen->current_draw_color;
+        screen->buffer[bottom_offset + i] = screen->current_draw_color;
     }
 
     for (i = top_offset; i <= bottom_offset; i += screen->width)
     {
-        screen->vga_memory[left + i] = screen->current_draw_color;
-        screen->vga_memory[right + i] = screen->current_draw_color;
+        screen->buffer[left + i] = screen->current_draw_color;
+        screen->buffer[right + i] = screen->current_draw_color;
     }
 }
 
