@@ -55,13 +55,14 @@ enum BDGL_Colors
     BDGL_WHITE
 };
 
-/* Data structure of the screen, holding dimensions and address of the VGA memory */
+/* Data structure of the screen */
 typedef struct BDGL_Screen
 {
-    BDGL_BYTE mode;
-    BDGL_WORD width, height;
-    BDGL_WORD color_number;
-    BDGL_BYTE *vga_memory;
+    BDGL_BYTE mode;                 // Video mode
+    BDGL_WORD width, height;        // Screen dimensions
+    BDGL_WORD color_number;         // Number of available colors
+    BDGL_BYTE current_draw_color;   // Current drawing color
+    BDGL_BYTE *vga_memory;          // Address of VGA memory
 } BDGL_Screen;
 
 /* Rectagular shape */
@@ -114,15 +115,22 @@ void BDGL_InitializeVideo(BDGL_Screen *screen);
 void BDGL_ClearScreen(BDGL_Screen *screen);
 
 /**
+ * Set drawing color to draw primitives with.
+ *
+ * @param screen        screen to set color of
+ * @param color         drawing color between 0 and 255
+ */
+void BDGL_SetDrawColor(BDGL_Screen *screen, const BDGL_BYTE color);
+
+/**
  * Draw a single point as a pixel on the screen. On negative coordinates, the 
  * point doesn't wrap around the screen.
  *
  * @param screen        screen pointer to draw point on
  * @param x             horizontal x coordinate
  * @param y             vertical y coordinate
- * @param color         color of point between 0 and 255
  */
-void BDGL_DrawPoint(BDGL_Screen *screen, int x, int y, const BDGL_BYTE color);
+void BDGL_DrawPoint(BDGL_Screen *screen, int x, int y);
 
 /**
  * Draw a straight line using Bresenham's algorithm.
@@ -132,28 +140,24 @@ void BDGL_DrawPoint(BDGL_Screen *screen, int x, int y, const BDGL_BYTE color);
  * @param y_start       vertical y coordinate of line starting point
  * @param x_end         horizontal x coordinate of line ending point
  * @param y_end         vertical y coordinate of line ending point
- * @param color         color of line between 0 and 255
  */
-void BDGL_DrawLine(BDGL_Screen *screen, int x_start, int y_start, int x_end, int y_end, 
-        const BDGL_BYTE color);
+void BDGL_DrawLine(BDGL_Screen *screen, int x_start, int y_start, int x_end, int y_end);
 
 /**
  * Draw outlines of a rectangle.
  *
  * @param screen        screen pointer to draw rectangle on
  * @param rectangle     rectangle to draw
- * @param color         color of rectangle between 0 and 255
  */
-void BDGL_DrawRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle, const BDGL_BYTE color);
+void BDGL_DrawRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle);
 
 /**
  * Draw a filled rectangle.
  *
  * @param screen        screen pointer to draw filled rectangle on
  * @param rectangle     rectangle to draw
- * @param color         color of filled rectangle between 0 and 255
  */
-void BDGL_DrawFilledRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle, const BDGL_BYTE color);
+void BDGL_DrawFilledRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle);
 
 /**
  * Draw polygonal shape specified by series of vertexes.
@@ -163,10 +167,8 @@ void BDGL_DrawFilledRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle, co
  *                          the function can't determine array size internally and needs to be specified
  *                          outside.
  * @param vertices          series of vertexes to draw
- * @param color             color of polygon between 0 and 255
  */
-void BDGL_DrawPolygon(BDGL_Screen *screen, const int vertex_number, BDGL_Vertex vertices[], 
-        const BDGL_BYTE color);
+void BDGL_DrawPolygon(BDGL_Screen *screen, const int vertex_number, BDGL_Vertex vertices[]);
 
 // TODO
 /**
