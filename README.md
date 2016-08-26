@@ -25,3 +25,4 @@ Then you'll be able to run your executable in DOSBox.
 * <http://www.columbia.edu/~em36/wpdos/videomodes.txt>
 * <http://tuttlem.github.io/2015/10/04/building-libraries-using-open-watcom.html>
 * <http://tuttlem.github.io/2015/10/04/inline-assembly-with-watcom.html>
+* <http://flipcode.com/demomaking>

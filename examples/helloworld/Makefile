@@ -1,5 +1,5 @@
-INCLUDE_DIR = ..\include
-LIB = ..\lib\BDGL.lib
+INCLUDE_DIR = ..\..\include
+LIB = ..\..\lib\BDGL.lib
 
 SYSTEM = dos
 # SYSTEM = dos4g

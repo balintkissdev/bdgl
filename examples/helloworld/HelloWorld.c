@@ -1,3 +1,8 @@
+/**
+ * Origin of example is from
+ * http://www.brackeen.com/vga/
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -5,21 +10,23 @@
 
 int main(int argc, char *argv[])
 {
-    int x, y, color;
-    int x1, y1, x2, y2;
-    BDGL_WORD i;
+    int x, y;               // Variables for point
+    int x1, y1, x2, y2;     // Variables for line
+    int i;                  // Loop variable
 
-    BDGL_Rectangle rect;
+    BDGL_Rectangle rect;    // Rectangle
 
-	BDGL_Vertex vertices[3] = {
+	BDGL_Vertex vertices[3] = { // Vertices
         {0,0},
         {7,5},
         {0,5}
 	};
 
+    // Create screen
     BDGL_Screen *screen = BDGL_CreateScreen(BDGL_MODE_VGA_320x200_256_COLOR);
     if (screen)
     {
+        // Initialize and display screen
         BDGL_InitializeVideo(screen);
 
         // Draw single pixels
@@ -35,7 +42,7 @@ int main(int argc, char *argv[])
         BDGL_DrawPoint(screen, 7, 5);
         BDGL_DrawPoint(screen, 0, 5);
         BDGL_SetDrawColor(screen, BDGL_RED);
-        BDGL_DrawPoint(screen, -20, -10);     // Check for drawing outside screen
+        BDGL_DrawPoint(screen, -20, -10);     // Test for drawing outside screen
         delay(4000);
         BDGL_ClearScreen(screen);
 
@@ -94,7 +101,7 @@ int main(int argc, char *argv[])
         BDGL_DrawPolygon(screen, BDGL_GetArrayLength(vertices), vertices);
         delay(4000);
 
-        // The end
+        // The end: free screen resources
         BDGL_DestroyScreen(screen);
         printf("Done\n");
     }
