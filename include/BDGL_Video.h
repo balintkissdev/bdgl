@@ -36,7 +36,7 @@ extern "C" {
 #define BDGL_MODE_SVGA_1024x768_16_COLOR    (0x104)
 #define BDGL_MODE_SVGA_1024x768_256_COLOR   (0x105)
 #define BDGL_MODE_SVGA_1280x1024_16_COLOR   (0x106)
-#define BDGL_MODE_SVGA_1280x1024_256_COLOR  (0x105)
+#define BDGL_MODE_SVGA_1280x1024_256_COLOR  (0x107)
 
 /* First 16 colors */
 #define BDGL_BLACK          (0x00)
