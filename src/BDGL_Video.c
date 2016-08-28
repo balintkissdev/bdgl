@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dos.h>
-#include <string.h>
+#include <mem.h>
 
 /* BIOS video interrupts */
 #define BDGL_BIOS_VIDEO_INTERRUPT        (0x10)

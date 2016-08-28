@@ -8,59 +8,58 @@ extern "C" {
 #endif
 
 /* VGA display modes */
-enum BDGL_VideoModes
-{
-    BDGL_MODE_TEXT_320x200_16_GREY = 0x00,
-    BDGL_MODE_TEXT_320x200_16_COLOR,
-    BDGL_MODE_TEXT_640x200_16_GREY,
-    BDGL_MODE_TEXT_640x200_16_COLOR,
-    BDGL_MODE_CGA_320x200_COLOR,
-    BDGL_MODE_CGA_320x200_MONO,
-    BDGL_MODE_CGA_640x200_MONO,
-    BDGL_MODE_TEXT_720x350_MONO,
-    BDGL_MODE_TEXT_1056x200_16_COLOR,
-    BDGL_MODE_TGA_320x200_16_COLOR,
-    BDGL_MODE_TGA_640x200_4_COLOR,
-    BDGL_MODE_0BH_EGA_BIOS_RESERVED,
-    BDGL_MODE_0CH_EGA_BIOS_RESERVED,
-    BDGL_MODE_EGA_320x200_16_COLOR,
-    BDGL_MODE_EGA_640x200_16_COLOR,
-    BDGL_MODE_EGA_640x350_MONO,
-    BDGL_MODE_EGA_640x350_4_COLOR,
-    BDGL_MODE_VGA_640x480_MONO,
-    BDGL_MODE_VGA_640x480_16_COLOR,
-    BDGL_MODE_VGA_320x200_256_COLOR,
-    BDGL_MODE_XGA_16_COLOR   // FIXME: I don't know what this mode is
-    // TODO: Remaining modes and VESA modes
-};
+// TODO: implement CGA, TGA, EGA and SVGA modes
+#define BDGL_MODE_TEXT_320x200_16_GREY      (0x00)
+#define BDGL_MODE_TEXT_320x200_16_COLOR     (0x01)
+#define BDGL_MODE_TEXT_640x200_16_GREY      (0x02)
+#define BDGL_MODE_TEXT_640x200_16_COLOR     (0x03)
+#define BDGL_MODE_CGA_320x200_4_COLOR       (0x04)
+#define BDGL_MODE_CGA_320x200_MONO          (0x05)
+#define BDGL_MODE_CGA_640x200_MONO          (0x06)
+#define BDGL_MODE_TEXT_720x350_MONO         (0x07)
+#define BDGL_MODE_TEXT_1056x200_16_COLOR    (0x08)
+#define BDGL_MODE_TGA_320x200_16_COLOR      (0x09)
+#define BDGL_MODE_TGA_640x200_4_COLOR       (0x0A)
+#define BDGL_MODE_0BH_EGA_BIOS_RESERVED     (0x0B)
+#define BDGL_MODE_0CH_EGA_BIOS_RESERVED     (0x0C)
+#define BDGL_MODE_EGA_320x200_16_COLOR      (0x0D)
+#define BDGL_MODE_EGA_640x200_16_COLOR      (0x0E)
+#define BDGL_MODE_EGA_640x350_MONO          (0x0F)
+#define BDGL_MODE_EGA_640x350_4_COLOR       (0x10)
+#define BDGL_MODE_VGA_640x480_MONO          (0x11)
+#define BDGL_MODE_VGA_640x480_16_COLOR      (0x12)
+#define BDGL_MODE_VGA_320x200_256_COLOR     (0x13)
+#define BDGL_MODE_SVGA_640x400_256_COLOR    (0x100)
+#define BDGL_MODE_SVGA_640x480_256_COLOR    (0x101)
+#define BDGL_MODE_SVGA_800x600_16_COLOR     (0x102)
+#define BDGL_MODE_SVGA_800x600_256_COLOR    (0x103)
+#define BDGL_MODE_SVGA_1024x768_16_COLOR    (0x104)
+#define BDGL_MODE_SVGA_1024x768_256_COLOR   (0x105)
+#define BDGL_MODE_SVGA_1280x1024_16_COLOR   (0x106)
+#define BDGL_MODE_SVGA_1280x1024_256_COLOR  (0x105)
 
 /* First 16 colors */
-enum BDGL_Colors
-{
-    BDGL_BLACK = 0x00,
-    BDGL_BLUE,
-    BDGL_GREEN,
-    BDGL_CYAN,
-    BDGL_RED,
-    BDGL_MAGENTA,
-    BDGL_BROWN,
-    BDGL_LIGHT_GRAY,
-    BDGL_DARK_GRAY,
-    BDGL_LIGHT_BLUE,
-    BDGL_LIGHT_GREEN,
-    BDGL_LIGHT_CYAN,
-    BDGL_LIGHT_RED,
-    BDGL_LIGHT_MAGENTA,
-    BDGL_YELLOW,
-    BDGL_WHITE
-};
+#define BDGL_BLACK          (0x00)
+#define BDGL_BLUE           (0x01)
+#define BDGL_GREEN          (0x02)
+#define BDGL_CYAN           (0x03)
+#define BDGL_RED            (0x04)
+#define BDGL_MAGENTA        (0x05)
+#define BDGL_BROWN          (0x06)
+#define BDGL_LIGHT_GRAY     (0x07)
+#define BDGL_DARK_GRAY      (0x08)
+#define BDGL_LIGHT_BLUE     (0x09)
+#define BDGL_LIGHT_GREEN    (0x0A)
+#define BDGL_LIGHT_CYAN     (0x0B)
+#define BDGL_LIGHT_RED      (0x0C)
+#define BDGL_LIGHT_MAGENTA  (0x0D)
+#define BDGL_YELLOW         (0x0E)
+#define BDGL_WHITE          (0x0F)
 
-enum BDGL_ScreenFlags
-{
-    BDGL_SCREEN_DEFAULT                    = 0x00,
-    BDGL_SCREEN_ENABLE_VSYNC,
-    BDGL_SCREEN_ENABLE_DOUBLE_BUFFER
-};
+/* Screen option flags */
+#define BDGL_SCREEN_DEFAULT                 (0x00)
+#define BDGL_SCREEN_ENABLE_VSYNC            (0x01)
+#define BDGL_SCREEN_ENABLE_DOUBLE_BUFFER    (0x02)
 
 
 /* Data structure of the screen */
@@ -87,7 +86,6 @@ typedef struct BDGL_Vertex
 {
     int x, y;
 } BDGL_Vertex;
-
 
 /**
  * Create screen and allocate memory resource for it's properties, like
