@@ -28,7 +28,7 @@ typedef unsigned long           BDGL_DWORD; /* 4 byte, 0-4,294,967,295  */
  * Helper macro to get the number of elements in an array.
  *
  * BE CAREFUL! It doesn't work with pointers, and arrays passed as function parameters 
- * are decayed as pointers.
+ * are decayed as such.
  *
  * @param array     array with a constant size
  * @return          number of elements in array
@@ -37,7 +37,7 @@ typedef unsigned long           BDGL_DWORD; /* 4 byte, 0-4,294,967,295  */
 
 BDGL_WORD *BDGL_SystemClock = (BDGL_WORD *)MK_FP(0,BDGL_CLOCK_ADDRESS);  // FIXME: encapsulate
 
-/* TODO */
+// TODO
 inline float BDGL_GetCurrentTicks()
 {
     return (*BDGL_SystemClock) / 18.2;
