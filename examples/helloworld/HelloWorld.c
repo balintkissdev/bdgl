@@ -2,13 +2,12 @@
  * Origin of example is from
  * http://www.brackeen.com/vga/
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <BDGL.H>
+#include <BDGL.h>
 
-int main(int argc, char *argv[])
+int main()
 {
     /* Variable declarations. Putting local variables here is 
      * how it only compiles under DOS.                          */
@@ -65,7 +64,7 @@ int main(int argc, char *argv[])
     BDGL_ClearScreen(screen);
 
     /* Draw lines                       */
-    for (i = 0; i < 5000; i++)
+    for (i = 0; i < 5000; ++i)
     {
         x1 = rand() % screen->width;
         y1 = rand() % screen->height;
@@ -79,7 +78,7 @@ int main(int argc, char *argv[])
     BDGL_ClearScreen(screen);
 
     /* Draw rectangles                  */
-    for (i = 0; i < 5000; i++)
+    for (i = 0; i < 5000; ++i)
     {
         rect.x = rand() % screen->width;
         rect.y = rand() % screen->height;

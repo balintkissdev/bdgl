@@ -114,7 +114,7 @@ BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode);
  *
  * @param screen        screen pointer to deallocate memory resource from
  */
-void BDGL_DestroyScreen(BDGL_Screen *screen);
+void BDGL_DestroyScreen(BDGL_Screen *const screen);
 
 /**
  * Enable display options, like vertical sync or double buffering.
@@ -128,7 +128,7 @@ void BDGL_DestroyScreen(BDGL_Screen *screen);
  *
  *                      BDGL_SCREEN_VSYNC | BDGL_SCREEN_DOUBLE_BUFFER
  */
-void BDGL_EnableScreenOption(BDGL_Screen *screen, const BDGL_BYTE flags);
+void BDGL_EnableScreenOption(BDGL_Screen *const screen, const BDGL_BYTE flags);
 
 /**
  * Disable display options, like vertical sync or double buffering.
@@ -142,21 +142,21 @@ void BDGL_EnableScreenOption(BDGL_Screen *screen, const BDGL_BYTE flags);
  *
  *                      BDGL_SCREEN_VSYNC | BDGL_SCREEN_DOUBLE_BUFFER
  */
-void BDGL_DisableScreenOption(BDGL_Screen *screen, const BDGL_BYTE flags);
+void BDGL_DisableScreenOption(BDGL_Screen *const screen, const BDGL_BYTE flags);
 
 /**
  * Switch to the specified video mode of the screen.
  *
  * @param screen        screen pointer to switch video modes to
  */
-void BDGL_InitializeVideo(BDGL_Screen *screen);
+void BDGL_InitializeVideo(BDGL_Screen *const screen);
 
 /**
  * Clear screen to draw again.
  *
  * @param screen        screen pointer to be cleared
  */
-void BDGL_ClearScreen(BDGL_Screen *screen);
+void BDGL_ClearScreen(BDGL_Screen *const screen);
 
 /**
  * Update screen with double buffering. Until this call, every pixel is written into
@@ -165,7 +165,7 @@ void BDGL_ClearScreen(BDGL_Screen *screen);
  *
  * @param               screen to update
  */
-void BDGL_UpdateScreen(BDGL_Screen *screen);
+void BDGL_UpdateScreen(BDGL_Screen *const screen);
 
 /**
  * Set drawing color to draw primitives with.
@@ -173,7 +173,7 @@ void BDGL_UpdateScreen(BDGL_Screen *screen);
  * @param screen        screen to set color of
  * @param color         drawing color between 0 and 255
  */
-void BDGL_SetDrawColor(BDGL_Screen *screen, const BDGL_BYTE color);
+void BDGL_SetDrawColor(BDGL_Screen *const screen, const BDGL_BYTE color);
 
 /**
  * Modify value of color found in VGA palette. Good if you want to implement screen filtering effects or
@@ -198,7 +198,7 @@ void BDGL_ModifyPaletteColor(const BDGL_BYTE palette_index,
  * @param x             horizontal x coordinate
  * @param y             vertical y coordinate
  */
-void BDGL_DrawPoint(BDGL_Screen *screen, int x, int y);
+void BDGL_DrawPoint(BDGL_Screen *const screen, const int x, const int y);
 
 /**
  * Draw a straight line using Bresenham's algorithm.
@@ -209,7 +209,7 @@ void BDGL_DrawPoint(BDGL_Screen *screen, int x, int y);
  * @param x_end         horizontal x coordinate of line ending point
  * @param y_end         vertical y coordinate of line ending point
  */
-void BDGL_DrawLine(BDGL_Screen *screen, int x_start, int y_start, int x_end, int y_end);
+void BDGL_DrawLine(BDGL_Screen *const screen, const int x_start, const int y_start, const int x_end, const int y_end);
 
 /**
  * Draw outlines of a rectangle.
@@ -217,7 +217,7 @@ void BDGL_DrawLine(BDGL_Screen *screen, int x_start, int y_start, int x_end, int
  * @param screen        screen pointer to draw rectangle on
  * @param rectangle     rectangle to draw
  */
-void BDGL_DrawRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle);
+void BDGL_DrawRectangle(BDGL_Screen *const screen, const BDGL_Rectangle *const rectangle);
 
 /**
  * Draw a filled rectangle.
@@ -225,7 +225,7 @@ void BDGL_DrawRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle);
  * @param screen        screen pointer to draw filled rectangle on
  * @param rectangle     rectangle to draw
  */
-void BDGL_DrawFilledRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle);
+void BDGL_DrawFilledRectangle(BDGL_Screen *const screen, const BDGL_Rectangle *const rectangle);
 
 /**
  * Draw polygonal shape specified by series of vertexes.
@@ -236,7 +236,7 @@ void BDGL_DrawFilledRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle);
  *                          outside.
  * @param vertices          series of vertexes to draw
  */
-void BDGL_DrawPolygon(BDGL_Screen *screen, const int vertex_number, BDGL_Vertex vertices[]);
+void BDGL_DrawPolygon(BDGL_Screen *const screen, const int vertex_number, BDGL_Vertex const* vertices);
 
 // TODO
 /**

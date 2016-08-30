@@ -5,6 +5,10 @@
 #include <dos.h>
 #include <mem.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* BIOS video interrupts */
 #define BDGL_BIOS_VIDEO_INTERRUPT        (0x10)
 #define BDGL_BIOS_VIDEO_SET_MODE         (0x00)
@@ -89,7 +93,7 @@ BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode)
     return screen;
 }
 
-void BDGL_DestroyScreen(BDGL_Screen *screen)
+void BDGL_DestroyScreen(BDGL_Screen *const screen)
 {
     if (screen)
     {
@@ -102,7 +106,7 @@ void BDGL_DestroyScreen(BDGL_Screen *screen)
     }
 }
 
-void BDGL_EnableScreenOption(BDGL_Screen *screen, const BDGL_BYTE flags)
+void BDGL_EnableScreenOption(BDGL_Screen *const screen, const BDGL_BYTE flags)
 {
     screen->flags |= flags;
 
@@ -112,7 +116,7 @@ void BDGL_EnableScreenOption(BDGL_Screen *screen, const BDGL_BYTE flags)
     }
 }
 
-void BDGL_DisableScreenOption(BDGL_Screen *screen, const BDGL_BYTE flags)
+void BDGL_DisableScreenOption(BDGL_Screen *const screen, const BDGL_BYTE flags)
 {
     screen->flags &= flags;
 
@@ -123,17 +127,17 @@ void BDGL_DisableScreenOption(BDGL_Screen *screen, const BDGL_BYTE flags)
     }
 }
 
-void BDGL_InitializeVideo(BDGL_Screen *screen)
+void BDGL_InitializeVideo(BDGL_Screen *const screen)
 {
     BDGL_SetVideoMode(screen->mode);
 }
 
-void BDGL_ClearScreen(BDGL_Screen *screen)
+void BDGL_ClearScreen(BDGL_Screen *const screen)
 {
     memset(screen->buffer, 0, screen->width * screen->height);
 }
 
-void BDGL_UpdateScreen(BDGL_Screen *screen)
+void BDGL_UpdateScreen(BDGL_Screen *const screen)
 {
     /* Wait for vertical retrace    */
     if (screen->flags & BDGL_SCREEN_VSYNC)
@@ -149,7 +153,7 @@ void BDGL_UpdateScreen(BDGL_Screen *screen)
     }
 }
 
-void BDGL_SetDrawColor(BDGL_Screen *screen, const BDGL_BYTE color)
+void BDGL_SetDrawColor(BDGL_Screen *const screen, const BDGL_BYTE color)
 {
     screen->current_draw_color = color;
 }
@@ -163,13 +167,13 @@ void BDGL_ModifyPaletteColor(const BDGL_BYTE palette_index,
      outp(VGA_PALETTE_DATA, blue63);
 }
 
-void BDGL_DrawPoint(BDGL_Screen *screen, int x, int y)
+void BDGL_DrawPoint(BDGL_Screen *const screen, const int x, const int y)
 {
     if (WITHIN_SCREEN_BOUNDARIES(screen, x, y))    /* Makes sure doesn't wrap around screen */
         screen->buffer[(y << 8) + (y << 6) + x] = screen->current_draw_color;
 }
 
-void BDGL_DrawLine(BDGL_Screen *screen, int x_start, int y_start,  int x_end, int y_end)
+void BDGL_DrawLine(BDGL_Screen *const screen, const int x_start, const int y_start,  const int x_end, const int y_end)
 {
     int delta_x = x_end - x_start;
 
@@ -218,7 +222,7 @@ void BDGL_DrawLine(BDGL_Screen *screen, int x_start, int y_start,  int x_end, in
 }
 
 // FIXME: drawing outside of screen wraps around
-void BDGL_DrawRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle)
+void BDGL_DrawRectangle(BDGL_Screen *const screen, const BDGL_Rectangle *const rectangle)
 {
     BDGL_WORD top_offset;
     BDGL_WORD bottom_offset;
@@ -262,7 +266,7 @@ void BDGL_DrawRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle)
 
 // FIXME: crashes
 // FIXME: drawing outside of screen wraps around
-void BDGL_DrawFilledRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle)
+void BDGL_DrawFilledRectangle(BDGL_Screen *const screen, const BDGL_Rectangle *const rectangle)
 {
     BDGL_WORD top_offset;
     BDGL_WORD bottom_offset;
@@ -297,7 +301,7 @@ void BDGL_DrawFilledRectangle(BDGL_Screen *screen, BDGL_Rectangle *rectangle)
     }
 }
 
-void BDGL_DrawPolygon(BDGL_Screen *screen, const int vertex_number, BDGL_Vertex vertices[])
+void BDGL_DrawPolygon(BDGL_Screen *const screen, const int vertex_number, BDGL_Vertex const* vertices)
 {
 	int i;
     for (i = 0; i < vertex_number - 1; ++i)
@@ -317,3 +321,7 @@ void BDGL_DrawPolygon(BDGL_Screen *screen, const int vertex_number, BDGL_Vertex 
 		vertices[0].y
     );
 }
+
+#ifdef __cplusplus
+}
+#endif

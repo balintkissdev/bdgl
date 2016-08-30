@@ -4,8 +4,8 @@ LIB = ..\..\lib\BDGL.lib
 SYSTEM = dos
 # SYSTEM = dos4g
 
-CC = wcl
-# CC = wcl386
+CC = wcl -cc
+# CC = wcl386 -cc
 CFLAGS = -w4 -zq -l=$(SYSTEM) -ml
 INCLUDE = -I$(INCLUDE_DIR)
 
