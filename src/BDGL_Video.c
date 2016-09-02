@@ -70,7 +70,7 @@ static void BDGL_SetVESAVideoMode(const BDGL_WORD video_mode)
 // FIXME: needs a better way to parse parameters rather than using switch-case
 BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode)
 {
-    BDGL_Screen *screen = malloc(sizeof(BDGL_Screen));
+    BDGL_Screen *screen = malloc(sizeof *screen);
     screen->mode = video_mode;
     switch (video_mode)
     {

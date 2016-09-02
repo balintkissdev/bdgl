@@ -12,7 +12,7 @@ SYSTEM = dos
 
 CC = wcl
 # CC = wcl386
-CFLAGS = -w4 -zq -l=$(SYSTEM) -ml
+CFLAGS = -cc -w4 -zq -l=$(SYSTEM) -ml
 INCLUDE = -I$(INCLUDE_DIR)
 
 # Needed for Watcom-specific "aux" pragma used for inline assembly
