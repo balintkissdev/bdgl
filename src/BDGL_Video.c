@@ -70,7 +70,14 @@ static void BDGL_SetVESAVideoMode(const BDGL_WORD video_mode)
 // FIXME: needs a better way to parse parameters rather than using switch-case
 BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode)
 {
-    BDGL_Screen *screen = malloc(sizeof *screen);
+    BDGL_Screen *screen = NULL;
+    screen = malloc(sizeof *screen);
+    if (!screen)
+    {
+        fprintf(stderr, "Fatal error: Not enough memory for screen data allocation.\n");
+        exit(EXIT_FAILURE);
+    }
+
     screen->mode = video_mode;
     switch (video_mode)
     {
@@ -112,7 +119,14 @@ void BDGL_EnableScreenOption(BDGL_Screen *const screen, const BDGL_BYTE flags)
 
     if (flags & BDGL_SCREEN_DOUBLE_BUFFER)
     {
+        screen->buffer = NULL;
         screen->buffer = calloc(screen->width * screen->height, 1);
+        if (!screen->buffer)
+        {
+            BDGL_DestroyScreen(screen);
+            fprintf(stderr, "Fatal error: Not enough memory for double buffer allocation.\n");
+            exit(EXIT_FAILURE);
+        }
     }
 }
 
