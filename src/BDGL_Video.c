@@ -1,3 +1,24 @@
+/*
+    Copyright (c) 2016 Bálint Kiss
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+*/
 #include <BDGL_Video.h>
 
 #include <stdio.h>
@@ -70,7 +91,14 @@ static void BDGL_SetVESAVideoMode(const BDGL_WORD video_mode)
 // FIXME: needs a better way to parse parameters rather than using switch-case
 BDGL_Screen* BDGL_CreateScreen(const BDGL_BYTE video_mode)
 {
-    BDGL_Screen *screen = malloc(sizeof(BDGL_Screen));
+    BDGL_Screen *screen = NULL;
+    screen = malloc(sizeof *screen);
+    if (!screen)
+    {
+        fprintf(stderr, "Fatal error: Not enough memory for screen data allocation.\n");
+        exit(EXIT_FAILURE);
+    }
+
     screen->mode = video_mode;
     switch (video_mode)
     {
@@ -112,7 +140,14 @@ void BDGL_EnableScreenOption(BDGL_Screen *const screen, const BDGL_BYTE flags)
 
     if (flags & BDGL_SCREEN_DOUBLE_BUFFER)
     {
+        screen->buffer = NULL;
         screen->buffer = calloc(screen->width * screen->height, 1);
+        if (!screen->buffer)
+        {
+            BDGL_DestroyScreen(screen);
+            fprintf(stderr, "Fatal error: Not enough memory for double buffer allocation.\n");
+            exit(EXIT_FAILURE);
+        }
     }
 }
 
