@@ -1,23 +1,23 @@
 /*
-    Copyright (c) 2016 Bálint Kiss
+  Copyright (c) 2016 Bálint Kiss <balint.kiss.501@gmail.com>
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
 
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 */
 
 #ifndef BDGL_VIDEO_H_
@@ -94,26 +94,26 @@ extern "C" {
 /* Data structure of the screen */
 typedef struct BDGL_Screen
 {
-    BDGL_BYTE mode;                 /* Video mode                   */
-    BDGL_WORD width, height;        /* Screen dimensions            */
-    BDGL_WORD color_number;         /* Number of available colors   */
-    BDGL_BYTE current_draw_color;   /* Current drawing color        */
-    BDGL_BYTE *vga_memory;          /* Address of VGA memory        */
-    BDGL_BYTE *buffer;              /* Buffer address               */
-    BDGL_BYTE flags;                /* Option flags                 */
+  BDGL_BYTE mode;                 /* Video mode                   */
+  BDGL_WORD width, height;        /* Screen dimensions            */
+  BDGL_WORD color_number;         /* Number of available colors   */
+  BDGL_BYTE current_draw_color;   /* Current drawing color        */
+  BDGL_BYTE *vga_memory;          /* Address of VGA memory        */
+  BDGL_BYTE *buffer;              /* Buffer address               */
+  BDGL_BYTE flags;                /* Option flags                 */
 } BDGL_Screen;
 
 /* Rectagular shape */
 typedef struct BDGL_Rectangle
 {
-    int x, y;
-    int width, height;
+  int x, y;
+  int width, height;
 } BDGL_Rectangle;
 
 /* 2D vertex for drawing polygons */
 typedef struct BDGL_Vertex
 {
-    int x, y;
+  int x, y;
 } BDGL_Vertex;
 
 /**
@@ -141,7 +141,8 @@ void BDGL_DestroyScreen(BDGL_Screen *const screen);
 /**
  * Enable display options, like vertical sync or double buffering.
  *
- * @param flags         bit flags to customize screen properties. The following values can be set:
+ * @param flags         bit flags to customize screen properties.
+ *                      The following values can be set:
  *
  *                      BDGL_SCREEN_VSYNC:           Enable wait for vertical retrace (VSync)
  *                      BDGL_SCREEN_DOUBLE_BUFFER:   Enable double buffering
@@ -198,8 +199,10 @@ void BDGL_UpdateScreen(BDGL_Screen *const screen);
 void BDGL_SetDrawColor(BDGL_Screen *const screen, const BDGL_BYTE color);
 
 /**
- * Modify value of color found in VGA palette. Good if you want to implement screen filtering effects or
- * want to define custom colors for yourself, however, you overwrite the default 256 color palette with this.
+ * Modify value of color found in VGA palette. 
+ * Good if you want to implement screen filtering effects or
+ * want to define custom colors for yourself, however, 
+ * you overwrite the default 256 color palette with this.
  *
  * This only works AFTER the screen is already initialized and displayed.
  *
@@ -209,8 +212,11 @@ void BDGL_SetDrawColor(BDGL_Screen *const screen, const BDGL_BYTE color);
  * @param green63           green component of RGB between 0 and 63
  * @param blue63            blue component of RGB between 0 and 63
  */
-void BDGL_ModifyPaletteColor(const BDGL_BYTE palette_index, 
-        const BDGL_BYTE red63, const BDGL_BYTE green63, const BDGL_BYTE blue63);
+void BDGL_ModifyPaletteColor(
+  const BDGL_BYTE palette_index, 
+  const BDGL_BYTE red63,
+  const BDGL_BYTE green63,
+  const BDGL_BYTE blue63);
 
 /**
  * Draw a single point as a pixel on the screen. On negative coordinates, the 
@@ -220,7 +226,10 @@ void BDGL_ModifyPaletteColor(const BDGL_BYTE palette_index,
  * @param x             horizontal x coordinate
  * @param y             vertical y coordinate
  */
-void BDGL_DrawPoint(BDGL_Screen *const screen, const int x, const int y);
+void BDGL_DrawPoint(
+  BDGL_Screen *const screen,
+  const int x,
+  const int y);
 
 /**
  * Draw a straight line using Bresenham's algorithm.
@@ -231,7 +240,12 @@ void BDGL_DrawPoint(BDGL_Screen *const screen, const int x, const int y);
  * @param x_end         horizontal x coordinate of line ending point
  * @param y_end         vertical y coordinate of line ending point
  */
-void BDGL_DrawLine(BDGL_Screen *const screen, const int x_start, const int y_start, const int x_end, const int y_end);
+void BDGL_DrawLine(
+  BDGL_Screen *const screen,
+  const int x_start, 
+  const int y_start, 
+  const int x_end, 
+  const int y_end);
 
 /**
  * Draw outlines of a rectangle.
@@ -239,7 +253,9 @@ void BDGL_DrawLine(BDGL_Screen *const screen, const int x_start, const int y_sta
  * @param screen        screen pointer to draw rectangle on
  * @param rectangle     rectangle to draw
  */
-void BDGL_DrawRectangle(BDGL_Screen *const screen, const BDGL_Rectangle *const rectangle);
+void BDGL_DrawRectangle(
+  BDGL_Screen *const screen,
+  const BDGL_Rectangle *const rectangle);
 
 /**
  * Draw a filled rectangle.
@@ -247,18 +263,24 @@ void BDGL_DrawRectangle(BDGL_Screen *const screen, const BDGL_Rectangle *const r
  * @param screen        screen pointer to draw filled rectangle on
  * @param rectangle     rectangle to draw
  */
-void BDGL_DrawFilledRectangle(BDGL_Screen *const screen, const BDGL_Rectangle *const rectangle);
+void BDGL_DrawFilledRectangle(
+  BDGL_Screen *const screen,
+  const BDGL_Rectangle *const rectangle);
 
 /**
  * Draw polygonal shape specified by series of vertexes.
  *
  * @param screen            screen pointer to draw polygon on
- * @param vertex_number     number of vertices to draw. Due to C decaying array parameters to pointers,
- *                          the function can't determine array size internally and needs to be specified
- *                          outside.
+ * @param vertex_number     number of vertices to draw. Due to C decaying array
+ *                          parameters to pointers, the function can't 
+ *                          determine array size internally and needs to be 
+ *                          specified outside.
  * @param vertices          series of vertexes to draw
  */
-void BDGL_DrawPolygon(BDGL_Screen *const screen, const int vertex_number, BDGL_Vertex const* vertices);
+void BDGL_DrawPolygon(
+  BDGL_Screen *const screen, 
+  const int vertex_number, 
+  BDGL_Vertex const* vertices);
 
 // TODO
 /**
