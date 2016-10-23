@@ -19,6 +19,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
+
+/**
+ * @file BDGL_Core.h
+ */
 #ifndef BDGL_CORE_H_
 #define BDGL_CORE_H_
 
@@ -29,13 +33,20 @@ extern "C" {
 #endif
 
 /* Primitive types */
-typedef unsigned char           BDGL_BYTE;  /* 1 byte, 0-255            */
-typedef unsigned short          BDGL_WORD;  /* 2 byte, 0-65,535         */
-typedef unsigned long           BDGL_DWORD; /* 4 byte, 0-4,294,967,295  */
+/** Primitive byte. 1 byte size, values ranging from 0 to 255. */
+typedef unsigned char           BDGL_BYTE;
+
+/** Primitive word. 2 byte size, values ranging from 0 to 65,535. */
+typedef unsigned short          BDGL_WORD;
+
+/**Primitive double word. 1 byte size, values ranging from 0 to 4,294,967,295. */
+typedef unsigned long           BDGL_DWORD;
 
 /* Memory addresses */
-#define BDGL_CLOCK_ADDRESS      (0x046C)    /* 18.2 Hz system clock */
-#define BDGL_VGA_ADDRESS        (0xA000)    /* VGA array            */
+/** 18.2 Hz system clock */
+#define BDGL_CLOCK_ADDRESS      (0x046C)
+/** VGA array            */
+#define BDGL_VGA_ADDRESS        (0xA000)    
 
 /**
  * Get the sign of a number.

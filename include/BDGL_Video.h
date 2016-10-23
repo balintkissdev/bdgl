@@ -20,6 +20,10 @@
   SOFTWARE.
 */
 
+/**
+ * @file BDGL_Video.h
+ * Brief file explanation
+ */
 #ifndef BDGL_VIDEO_H_
 #define BDGL_VIDEO_H_
 
@@ -30,6 +34,10 @@ extern "C" {
 #endif
 
 // TODO: implement CGA, TGA, EGA and SVGA modes
+/** @addtogroup DOS Video Modes
+*  Options for DOS video modes
+*  @{
+*/
 /* Text display modes   */
 #define BDGL_MODE_TEXT_320x200_16_GREY      (0x00)
 #define BDGL_MODE_TEXT_320x200_16_COLOR     (0x01)
@@ -67,6 +75,7 @@ extern "C" {
 #define BDGL_MODE_SVGA_1024x768_256_COLOR   (0x105)
 #define BDGL_MODE_SVGA_1280x1024_16_COLOR   (0x106)
 #define BDGL_MODE_SVGA_1280x1024_256_COLOR  (0x107)
+/** @} */
 
 /* First 16 colors */
 #define BDGL_BLACK          (0x00)
