@@ -7,7 +7,7 @@
 #include <iostream>
 #include <stdlib.h>     // Watcom doesn't recognize <cstdlib>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   // Variable declarations. Putting local variables here is 
   // how it only compiles under DOS.
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
   };
 
   // Create screen
-  bdgl::Screen screen(BDGL_MODE_VGA_320x200_256_COLOR);
+  bdgl::graphics::Screen screen(BDGL_MODE_VGA_320x200_256_COLOR);
 
   // Initialize and display screen
   screen.initialize();
@@ -92,6 +92,6 @@ int main(int argc, char *argv[])
   // No need to separately free screen resources, 
   // the class destructor takes care of it automatically.
 
-  std::cout << "Done.\n";
+  std::cout << "Done." << std::endl;
   return 0;
 }

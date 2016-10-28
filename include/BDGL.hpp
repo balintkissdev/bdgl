@@ -25,7 +25,7 @@
 /**
  * Master C++ wrapper header file
  */
-#include "BDGL_Core.h"
-#include "BDGL_Video.hpp"
+#include "core/BDGL_Core.h"
+#include "graphics/BDGL_Video.hpp"
 
 #endif  // BDGL_HPP_

@@ -25,7 +25,9 @@
 /**
  * Master header file
  */
-#include "BDGL_Core.h"
-#include "BDGL_Video.h"
+#include "core/BDGL_Core.h"
+#include "graphics/BDGL_Video.h"
+#include "graphics/BDGL_Shapes.h"
+#include "graphics/BDGL_Image.h"
 
 #endif  // BDGL_H_
