@@ -1,11 +1,11 @@
 # TODO: This currently does 16-bit DOS compiling
 # TODO: Only used with Open Watcom
-# TODO: Place .obj files in separate "build" directory
 
 ####### Compiler, flags and options
 
 SOURCE_DIR = src
 INCLUDE_DIR = include
+OBJ_DIR = build
 LIB_DIR = lib
 
 SYSTEM = dos
@@ -25,9 +25,10 @@ LIBUTIL = wlib
 
 ####### Sources
 
+VPATH = $(SOURCE_DIR)
 SOURCES = BDGL_Video.c BDGL_Shapes.c
 
-OBJECTS = BDGL_Video.obj BDGL_Shapes.obj
+OBJECTS = BDGL_Video.obj BDGL_Shapes.obj #BDGL_Keyboard.obj
 
 ####### Build rules
 
@@ -37,11 +38,19 @@ BDGL.lib: .SYMBOLIC $(OBJECTS)
 	@if not exist $(LIB_DIR) md $(LIB_DIR)
 	$(LIBUTIL) -n -o=$(LIB_DIR)\$@ $@ +$<
 
-BDGL_Video.obj: $(SOURCE_DIR)/graphics/BDGL_Video.c			
+# TODO: Place .obj files in separate "build" directory
+# TODO: use wildcards
+BDGL_Video.obj: .SYMBOLIC $(SOURCE_DIR)/graphics/BDGL_Video.c			
 	$(CC) $(CFLAGS) $(INCLUDE) -c $<
 
-BDGL_Shapes.obj: $(SOURCE_DIR)/graphics/BDGL_Shapes.c
+BDGL_Shapes.obj: .SYMBOLIC $(SOURCE_DIR)/graphics/BDGL_Shapes.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+
+#BDGL_Keyboard.obj: .SYMBOLIC $(SOURCE_DIR)/event/BDGL_Keyboard.c
+#	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+
+#BDGL_Image.obj: $(SOURCE_DIR)/graphics/BDGL_Image.c
+#	$(CC) $(CFLAGS) $(INCLUDE) -c $<
 
 # TODO: dist:
 

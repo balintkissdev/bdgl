@@ -13,9 +13,9 @@ ifeq CC wcl
 CFLAGS += -DWATCOM		
 endif
 
-all: Starfield.exe
+all: Keyboard.exe
 
-Starfield.exe: Starfield.c $(LIB)
+Keyboard.exe: Keyboard.c $(LIB)
 	$(CC) $(CFLAGS) $(INCLUDE) $<
 
 clean: .SYMBOLIC

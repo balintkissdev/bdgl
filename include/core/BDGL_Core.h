@@ -26,21 +26,13 @@
 #ifndef BDGL_CORE_H_
 #define BDGL_CORE_H_
 
+#include "BDGL_Types.h"
+
 #include <dos.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/* Primitive types */
-/** Primitive byte. 1 byte size, values ranging from 0 to 255. */
-typedef unsigned char           BDGL_BYTE;
-
-/** Primitive word. 2 byte size, values ranging from 0 to 65,535. */
-typedef unsigned short          BDGL_WORD;
-
-/**Primitive double word. 1 byte size, values ranging from 0 to 4,294,967,295. */
-typedef unsigned long           BDGL_DWORD;
 
 /* Memory addresses */
 /** 18.2 Hz system clock */

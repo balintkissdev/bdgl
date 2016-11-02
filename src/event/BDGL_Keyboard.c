@@ -19,16 +19,40 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-#ifndef BDGL_H_
-#define BDGL_H_
+#include <event/BDGL_Keyboard.h>
+
+#include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
- * Master header file
  */
-#include "core/BDGL_Core.h"
-#include "event/BDGL_Keyboard.h"
-#include "graphics/BDGL_Video.h"
-#include "graphics/BDGL_Shapes.h"
-#include "graphics/BDGL_Image.h"
+/*BDGL_BYTE BDGL_GetScancode();
+#ifdef WATCOM
+#pragma aux BDGL_GetScancode =        \
+  "mov AH, 01h"                       \
+  "int 16h"                           \
+  "jz empty"                          \
+  "mov AH, 00h"                       \
+  "int 16h"                           \
+  "mov AL, AH"                        \
+                                      \
+  "xor AH, AH"                        \
+  "jmp done"                          \
+                                      \
+  "empty:"                            \
+  " xor AX, AX"                       \
+                                      \
+  "done:"                             \
+  value [AX]
+#else
+{
+  // TODO
+}
+#endif*/
 
-#endif  // BDGL_H_
+#ifdef __cplusplus
+}
+#endif
