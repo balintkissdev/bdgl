@@ -27,6 +27,7 @@
  */
 #include "core/BDGL_Core.h"
 #include "event/BDGL_Keyboard.h"
+#include "event/BDGL_Mouse.h"
 #include "graphics/BDGL_Video.h"
 #include "graphics/BDGL_Shapes.h"
 #include "graphics/BDGL_Image.h"
