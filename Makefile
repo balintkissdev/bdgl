@@ -1,64 +1,68 @@
-# TODO: This currently does 16-bit DOS compiling
-# TODO: Only used with Open Watcom
+!include Common.mk
 
-####### Compiler, flags and options
+SRC_DIR = src           # Sources directory
+INCLUDE_DIR = include   # Public header directory
+OBJ_DIR = build         # Intermediate build directory
 
-SOURCE_DIR = src
-INCLUDE_DIR = include
-OBJ_DIR = build
-LIB_DIR = lib
-
-SYSTEM = dos
-# SYSTEM = dos4g
-
-CC = wcl
-# CC = wcl386
-CFLAGS = -cc -w4 -zq -l=$(SYSTEM) -ml
-INCLUDE = -I$(INCLUDE_DIR)
-
-# Needed for Watcom-specific "aux" pragma used for inline assembly
-ifeq CC wcl
-CFLAGS += -DWATCOM		
-endif
-
-LIBUTIL = wlib
+# TODO: Write build configuration script
 
 ####### Sources
 
-VPATH = $(SOURCE_DIR)
-SOURCES = BDGL_Video.c BDGL_Shapes.c BDGL_Keyboard.c BDGL_Mouse.c BDGL_Image.c
+OBJ_DOS16_DIR = $(OBJ_DIR)/dos16
+OBJ_DOS32_DIR = $(OBJ_DIR)/dos32
 
-OBJECTS = BDGL_Video.obj BDGL_Shapes.obj BDGL_Keyboard.obj BDGL_Mouse.obj BDGL_Image.obj
+# TODO: Move to .mk files
+OBJ_DOS16 = &
+	$(OBJ_DOS16_DIR)/screen.obj &
+	$(OBJ_DOS16_DIR)/shapes.obj &
+	$(OBJ_DOS16_DIR)/keyboard.obj &
+	$(OBJ_DOS16_DIR)/mouse.obj &
+	$(OBJ_DOS16_DIR)/image.obj
+
+OBJ_DOS32 = &
+	$(OBJ_DOS32_DIR)/screen.obj &
+	$(OBJ_DOS32_DIR)/shapes.obj &
+	$(OBJ_DOS32_DIR)/keyboard.obj &
+	$(OBJ_DOS32_DIR)/mouse.obj &
+	$(OBJ_DOS32_DIR)/image.obj
 
 ####### Build rules
 
-all: BDGL.lib
+all : $(LIB_DOS16_TARGET) $(LIB_DOS32_TARGET) examples
 
-BDGL.lib: .SYMBOLIC $(OBJECTS)
-	@if not exist $(LIB_DIR) md $(LIB_DIR)
-	$(LIBUTIL) -n -o=$(LIB_DIR)\$@ $@ +$<
+lib_dos16 : $(LIB_DOS16_TARGET)
 
-# TODO: Place .obj files in separate "build" directory
-# TODO: use wildcards
-BDGL_Video.obj: .SYMBOLIC $(SOURCE_DIR)/graphics/BDGL_Video.c			
-	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+lib_dos32 : $(LIB_DOS32_TARGET)
 
-BDGL_Shapes.obj: .SYMBOLIC $(SOURCE_DIR)/graphics/BDGL_Shapes.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+examples : $(LIB_DOS16_TARGET) $(LIB_DOS32_TARGET)
+	cd examples
+	wmake all
+	cd ..
 
-BDGL_Keyboard.obj: .SYMBOLIC $(SOURCE_DIR)/event/BDGL_Keyboard.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+# 16-bit target
 
-BDGL_Mouse.obj: .SYMBOLIC $(SOURCE_DIR)/event/BDGL_Mouse.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+$(LIB_DOS16_TARGET) : .AUTODEPEND $(OBJ_DOS16)
+	$(MKDIR) $(LIB_DOS16_DIR)
+	$(LIBUTIL) -n $@ $(OBJ_DOS16)
 
-BDGL_Image.obj: $(SOURCE_DIR)/graphics/BDGL_Image.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+# 32-bit target
+# FIXME: 32-bit library still needs to be ported
+
+$(LIB_DOS32_TARGET) : .AUTODEPEND $(OBJ_DOS32)
+	$(MKDIR) $(LIB_DOS32_DIR)
+	$(LIBUTIL) -n $@ $(OBJ_DOS32)
+
+!include src/src.mk
 
 # TODO: dist:
 
-# TODO: check:
+# TODO: check: (Requires tests)
 
-clean: .SYMBOLIC
-	del /F *.exe *.lib *.err *.obj
-	rd /S /Q $(LIB_DIR)
+doc : .SYMBOLIC
+	doxygen
+
+clean : .SYMBOLIC
+	$(RM_DIR) -rf $(LIB_DIR) $(OBJ_DIR)
+	cd examples
+	wmake clean
+	cd ..
