@@ -23,47 +23,87 @@
 #define _BDGL_TYPES_H_
 
 /** 
- * Primitive byte.
+ * Typedef for unsigned char.
  *
- * 1 byte size, values ranging from 0 to 255.
+ * Also known as byte. 1 byte sized, values range from 0 to 255. This
+ * is the equivalent of uint8_t from C99's stdint.h.
  */
 typedef unsigned char BDGL_Uint8;
 
 /**
- * Primitive word.
+ * Typedef for unsigned short.
  *
- * 2 byte size, values ranging from 0 to 65,535.
+ * Also known as word. 2 byte sized, values range from 0 to 65,535. This is
+ * the equivalent of uint16_t from C99's stdint.h.
  */
 typedef unsigned short BDGL_Uint16;
 
 /**
- * Primitive double word.
+ * Typedef for unsigned long int.
  *
- * 1 byte size, values ranging from 0 to 4,294,967,295.
+ * Also known as double word. 4 byte sized, values range from 0 to
+ * 4,294,967,295. This is the equivalent of uint32_t from C99's stdint.h.
  */
 typedef unsigned long int BDGL_Uint32;
 
+/**
+ * Typedef for unsigned long long int.
+ *
+ * 8 byte sized, values range from 0 to 18,446,744,073,709,551,615. This is
+ * the equivalent of uint64_t from C99's stdint.h.
+ */
 typedef unsigned long long int BDGL_Uint64;
 
-typedef char BDGL_Int8;
+/**
+ * Typedef for signed char.
+ *
+ * 1 byte sized, values range from −127 to 127. This is the equivalent of
+ * int8_t from C99's stdint.h.
+ */
+typedef signed char BDGL_Int8;
 
-typedef short BDGL_Int16;
+/**
+ * Typedef for signed short.
+ *
+ * 2 byte sized, values range from −32,767 to 32,767. This is the equivalent
+ * of int16_t from C99's stdint.h.
+ */
+typedef signed short BDGL_Int16;
 
-typedef long int BDGL_Int32;
+/**
+ * Typedef for signed long int.
+ *
+ * 4 byte sized, values range from -2,147,483,648 to 2,147,483,647. This is
+ * the equivalent of int32_t from C99's stdint.h.
+ */
+typedef signed long int BDGL_Int32;
 
-typedef long long int BDGL_Int64;
+/**
+ * Typedef for signed long long int.
+ *
+ * 8 byte sized, values range from -9,223,372,036,854,775,808 to
+ * 9,223,372,036,854,775,807. This is the equivalent of int64_t from C99's
+ * stdint.h.
+ */
+typedef signed long long int BDGL_Int64;
 
 /**
  * Primitive boolean type.
  */
 typedef enum
 {
-  BDGL_FALSE,
-  BDGL_TRUE
+  BDGL_FALSE = 0,
+  BDGL_TRUE = 1
 } BDGL_Bool;
 
+/**
+ * Typedef for the keyboard scancode.
+ */
 typedef BDGL_Uint8 BDGL_KeyScancode;
 
+/**
+ * Typedef for the mouse button code.
+ */
 typedef BDGL_Uint8 BDGL_MouseButton;
 
 #endif  /* _BDGL_TYPES_H_ */
