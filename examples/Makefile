@@ -1,32 +1,35 @@
 !include ../Common.mk
 
-INCLUDE_DIR = ../include
+RM_CMD=..$(SEP)$(RM_CMD)
+MKDIR_CMD=..$(SEP)$(MKDIR_CMD)
 
-LIB_DOS16 = ../$(LIB_DOS16_TARGET)
-LIB_DOS32 = ../$(LIB_DOS32_TARGET)
+INCLUDE_DIR = ..$(SEP)include
+
+LIB_DOS16 = ..$(SEP)$(LIB_DOS16_TARGET)
+LIB_DOS32 = ..$(SEP)$(LIB_DOS32_TARGET)
 
 PROGRAM_DIR = bin
 OBJ_DIR = build
 
-PROGRAM_DOS16_DIR = $(PROGRAM_DIR)/dos16
-PROGRAM_DOS32_DIR = $(PROGRAM_DIR)/dos32
+PROGRAM_DOS16_DIR = $(PROGRAM_DIR)$(SEP)dos16
+PROGRAM_DOS32_DIR = $(PROGRAM_DIR)$(SEP)dos32
 
 PROGRAMS_DOS16 = &
-  $(PROGRAM_DOS16_DIR)/bmp.exe &
-  $(PROGRAM_DOS16_DIR)/hello.exe &
-  $(PROGRAM_DOS16_DIR)/keys.exe &
-  $(PROGRAM_DOS16_DIR)/mouse.exe &
-  $(PROGRAM_DOS16_DIR)/stars.exe
+  $(PROGRAM_DOS16_DIR)$(SEP)bmp.exe &
+  $(PROGRAM_DOS16_DIR)$(SEP)hello.exe &
+  $(PROGRAM_DOS16_DIR)$(SEP)keys.exe &
+  $(PROGRAM_DOS16_DIR)$(SEP)mouse.exe &
+  $(PROGRAM_DOS16_DIR)$(SEP)stars.exe
 
 PROGRAMS_DOS32 = &
-  $(PROGRAM_DOS32_DIR)/bmp.exe &
-  $(PROGRAM_DOS32_DIR)/hello.exe &
-  $(PROGRAM_DOS32_DIR)/keys.exe &
-  $(PROGRAM_DOS32_DIR)/mouse.exe &
-  $(PROGRAM_DOS32_DIR)/stars.exe
+  $(PROGRAM_DOS32_DIR)$(SEP)bmp.exe &
+  $(PROGRAM_DOS32_DIR)$(SEP)hello.exe &
+  $(PROGRAM_DOS32_DIR)$(SEP)keys.exe &
+  $(PROGRAM_DOS32_DIR)$(SEP)mouse.exe &
+  $(PROGRAM_DOS32_DIR)$(SEP)stars.exe
 
-OBJ_DOS16_DIR = $(OBJ_DIR)/dos16
-OBJ_DOS32_DIR = $(OBJ_DIR)/dos32
+OBJ_DOS16_DIR = $(OBJ_DIR)$(SEP)dos16
+OBJ_DOS32_DIR = $(OBJ_DIR)$(SEP)dos32
 
 all : $(PROGRAMS_DOS16) $(PROGRAMS_DOS32)
 
@@ -41,4 +44,5 @@ examples_dos32 : $(PROGRAMS_DOS32)
 !include stars/stars.mk
 
 clean : .SYMBOLIC
-	$(RM_DIR) $(PROGRAM_DIR) $(OBJ_DIR)
+	$(RM_CMD) $(PROGRAM_DIR)
+	$(RM_CMD) $(OBJ_DIR)

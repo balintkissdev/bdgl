@@ -5,26 +5,27 @@ INCLUDE_DIR = include   # Public header directory
 OBJ_DIR = build         # Intermediate build directory
 
 # TODO: Write build configuration script
+# TODO: Use implicit build rules
 
 ####### Sources
 
-OBJ_DOS16_DIR = $(OBJ_DIR)/dos16
-OBJ_DOS32_DIR = $(OBJ_DIR)/dos32
+OBJ_DOS16_DIR = $(OBJ_DIR)$(SEP)dos16
+OBJ_DOS32_DIR = $(OBJ_DIR)$(SEP)dos32
 
 # TODO: Move to .mk files
 OBJ_DOS16 = &
-	$(OBJ_DOS16_DIR)/screen.obj &
-	$(OBJ_DOS16_DIR)/shapes.obj &
-	$(OBJ_DOS16_DIR)/keyboard.obj &
-	$(OBJ_DOS16_DIR)/mouse.obj &
-	$(OBJ_DOS16_DIR)/image.obj
+	$(OBJ_DOS16_DIR)$(SEP)screen.obj &
+	$(OBJ_DOS16_DIR)$(SEP)shapes.obj &
+	$(OBJ_DOS16_DIR)$(SEP)keyboard.obj &
+	$(OBJ_DOS16_DIR)$(SEP)mouse.obj &
+	$(OBJ_DOS16_DIR)$(SEP)image.obj
 
 OBJ_DOS32 = &
-	$(OBJ_DOS32_DIR)/screen.obj &
-	$(OBJ_DOS32_DIR)/shapes.obj &
-	$(OBJ_DOS32_DIR)/keyboard.obj &
-	$(OBJ_DOS32_DIR)/mouse.obj &
-	$(OBJ_DOS32_DIR)/image.obj
+	$(OBJ_DOS32_DIR)$(SEP)screen.obj &
+	$(OBJ_DOS32_DIR)$(SEP)shapes.obj &
+	$(OBJ_DOS32_DIR)$(SEP)keyboard.obj &
+	$(OBJ_DOS32_DIR)$(SEP)mouse.obj &
+	$(OBJ_DOS32_DIR)$(SEP)image.obj
 
 ####### Build rules
 
@@ -42,17 +43,17 @@ examples : $(LIB_DOS16_TARGET) $(LIB_DOS32_TARGET)
 # 16-bit target
 
 $(LIB_DOS16_TARGET) : .AUTODEPEND $(OBJ_DOS16)
-	$(MKDIR) $(LIB_DOS16_DIR)
+	@$(MKDIR_CMD) $(LIB_DOS16_DIR)
 	$(LIBUTIL) -n $@ $(OBJ_DOS16)
 
 # 32-bit target
 # FIXME: 32-bit library still needs to be ported
 
 $(LIB_DOS32_TARGET) : .AUTODEPEND $(OBJ_DOS32)
-	$(MKDIR) $(LIB_DOS32_DIR)
+	@$(MKDIR_CMD) $(LIB_DOS32_DIR)
 	$(LIBUTIL) -n $@ $(OBJ_DOS32)
 
-!include src/src.mk
+!include $(SRC_DIR)/src.mk
 
 # TODO: dist:
 
@@ -62,7 +63,8 @@ doc : .SYMBOLIC
 	doxygen
 
 clean : .SYMBOLIC
-	$(RM_DIR) -rf $(LIB_DIR) $(OBJ_DIR)
+	$(RM_CMD) $(LIB_DIR)
+	$(RM_CMD) $(OBJ_DIR)
 	cd examples
 	wmake clean
 	cd ..

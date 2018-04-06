@@ -2,7 +2,7 @@
 A work-in-progress C library for DOS game programming, currently containing DOS
 graphics-related functions and has an API reminiscent of SDL. 16-bit programs
 compiled with a Open Watcom and linked with this library work under DOSBox.
-Currently supported DOS compiler is Open Watcom 1.9 and
+The currently supported DOS compiler is Open Watcom 1.9 and
 Open Watcom V2 on Windows and Linux.
 
 ## Current features
@@ -16,21 +16,49 @@ Open Watcom V2 on Windows and Linux.
 
 ## Building
 
-1. The recommended compiler to use is the recent Open Watcom V2
-   compiler, although Open Watcom 1.9 is also supported.
-   Download the binary release from
-   [](https://github.com/open-watcom/travis-ci-ow-builds/archive/master.zip).
-   Uncompress the files to somewhere.
-2. Clone this repository with Git using
-   `git clone https://github.com/balintkiss501/BDGL`
-3. Modify the `WATCOM` variable in `scripts/setwatcom.sh` file if you are
-   under Linux or in `scripts/setwatcom.bat` if you are under Windows to
-   point to your uncompressed Watcom folder.
-4. Load the Watcom environment using `. scripts/setwatcom.sh` if you are under
-   Linux or `setwatcom.bat` if you are under Windows.
-3. Build the library using `wmake`. This will build the linkable static
+The recommended compiler to use is the recent Open Watcom V2 compiler, although
+Open Watcom 1.9 is also supported. You can download the binary release
+from https://github.com/open-watcom/travis-ci-ow-builds/archive/master.zip
+and extract it somewhere, but better yet, you can use the bundled
+`install_deps.py` script under the `scripts` folder to download and extract
+inside a `deps` folder in the project.
+
+1. Clone this repository with Git and enter the project folder.
+
+   ```bash
+   git clone https://github.com/balintkiss501/bdgl
+   cd bdgl
+   ```
+
+2. Execute `scripts/install_deps.py` script with Python 3 to download the
+   Open Watcom V2 compiler suite and other dependencies.
+
+   ```bash
+   python3 scripts/install_deps.py
+   ```
+
+3. Set the Watcom environment using `scripts/set_watcom.sh` if you are under
+   Linux/Unix/MSYS/Cygwin or `set_watcom.bat` if you are under Windows.
+
+   ```bash
+   # If under Linux/Unix/MSYS/Cygwin
+   source scripts/set_watcom.sh
+   ```
+
+   ```bash
+   # If under Windows command line
+   scripts/set_watcom.bat
+   ```
+
+4. Build the library using `wmake`. This will build the linkable static
    libraries for 16- and 32-bit architectures under the `lib` folder and the
    examples in `examples/bin` folder.
+
+   ```
+   wmake
+   ```
+
+You are done and ready to use the library.
 
 ## Usage
 
@@ -50,16 +78,16 @@ dosbox yourprogram.exe
 
 **Note about 32-bit DOS builds:** Running 32-bit DOS programs requires the use of
 a DOS Extender. One such as DOS/32A can be downloaded from
-[](http://dos32a.narechk.net). However, executing programs compiled with 32-bit
+http://dos32a.narechk.net. However, executing programs compiled with 32-bit
 BDGL is currently not supported.
 
 ## References:
 
-* <ftp://ftp.openwatcom.org/pub/manuals/current/cguide.pdf>
-* <ftp://ftp.openwatcom.org/manuals/current/tools.pdf>
-* <http://www.brackeen.com/vga/>
-* <http://www.wagemakers.be/english/doc/vga>
-* <http://www.columbia.edu/~em36/wpdos/videomodes.txt>
-* <http://tuttlem.github.io/2015/10/04/building-libraries-using-open-watcom.html>
-* <http://tuttlem.github.io/2015/10/04/inline-assembly-with-watcom.html>
-* <http://flipcode.com/demomaking>
+* ftp://ftp.openwatcom.org/pub/manuals/current/cguide.pdf
+* ftp://ftp.openwatcom.org/manuals/current/tools.pdf
+* http://www.brackeen.com/vga/
+* http://www.wagemakers.be/english/doc/vga
+* http://www.columbia.edu/~em36/wpdos/videomodes.txt
+* http://tuttlem.github.io/2015/10/04/building-libraries-using-open-watcom.html
+* http://tuttlem.github.io/2015/10/04/inline-assembly-with-watcom.html
+* http://flipcode.com/demomaking

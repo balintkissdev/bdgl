@@ -1,0 +1,2 @@
+@ECHO OFF
+IF EXIST %1 RD /Q /S %1 & IF EXIST %1 (EXIT 1)

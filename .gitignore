@@ -1,5 +1,11 @@
 tags
 lib/*
+deps/*
 *.err
 *.obj
 *.exe
+
+examples/bin/*
+examples/obj/*
+
+*.swp

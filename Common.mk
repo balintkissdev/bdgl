@@ -1,14 +1,12 @@
-# Platform-independent file operation commands
 !ifdef __UNIX__
-MKDIR = mkdir -p
-COPY_FILE = cp -rf
-RM_FILE = rm -rf
-RM_DIR = rm -rf
+COPY_CMD = cp -rf
+SEP = /
+SCRIPT_EXTENSION =sh    # Mind the lack of space
 !else
-MKDIR = MD
-COPY_FILE = COPY /Y
-RM_FILE = DEL /F /Q
-RM_DIR = RD /S /Q
+COPY_CMD = COPY /Y
+SEP = \                 # Unlike GNU Make, one backslash should be used instead
+                        # of two for WMake
+SCRIPT_EXTENSION =bat   # Mind the lack of space
 !endif
 
 ####### Compiler, flags and options
@@ -25,6 +23,7 @@ CFLAGS = -we -w4 -zq -ml
 
 CFLAGS_OPTIMIZE_BASIC = -oneatx -oh -ei -zp8
 
+# TODO: These specialized optimization flags can be set by a configure script
 CFLAGS_OPTIMIZE_DOS16 = $(CFLAGS_OPTIMIZE_BASIC) -fpi87
 CFLAGS_OPTIMIZE_DOS16_8086 = $(CFLAGS_OPTIMIZE_DOS16) -0
 CFLAGS_OPTIMIZE_DOS16_186 = $(CFLAGS_OPTIMIZE_DOS16) -1
@@ -44,10 +43,17 @@ CFLAGS_DOS32 = $(CFLAGS) -l=$(SYSTEM_DOS32) $(CFLAGS_OPTIMIZE_DOS32_386)
 
 LIBUTIL = wlib
 
-LIB_DIR = lib		# Target library directory
+# Target library directory
+LIB_DIR = lib
 
-LIB_DOS16_DIR = $(LIB_DIR)/dos16
-LIB_DOS32_DIR = $(LIB_DIR)/dos32
+LIB_DOS16_DIR = $(LIB_DIR)$(SEP)dos16
+LIB_DOS32_DIR = $(LIB_DIR)$(SEP)dos32
 
-LIB_DOS16_TARGET = $(LIB_DOS16_DIR)/BDGL.lib
-LIB_DOS32_TARGET = $(LIB_DOS32_DIR)/BDGL.lib
+LIB_DOS16_TARGET = $(LIB_DOS16_DIR)$(SEP)BDGL.lib
+LIB_DOS32_TARGET = $(LIB_DOS32_DIR)$(SEP)BDGL.lib
+
+# Platform-independent file operation commands
+# TODO: Can you make it that Makefile prints the commands of the scripts
+#       instead of the filenames of them?
+MKDIR_CMD=scripts$(SEP)internal$(SEP)mkdir_cmd.$(SCRIPT_EXTENSION)
+RM_CMD=scripts$(SEP)internal$(SEP)rm_cmd.$(SCRIPT_EXTENSION)
