@@ -5,6 +5,10 @@ deps/*
 *.obj
 *.exe
 
+doc/html/*
+doc/latex/*
+doc/doxygen.log
+
 examples/bin/*
 examples/obj/*
 
