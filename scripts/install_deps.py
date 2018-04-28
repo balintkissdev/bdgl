@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-# Copyright (c) 2016-2018 Balint Kiss <balint.kiss.501@gmail.com>
+# Copyright (c) 2016 Balint Kiss <balint.kiss.501@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to
