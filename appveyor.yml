@@ -1,0 +1,18 @@
+environment:
+  global:
+    # TODO: Support Python 2.7 too
+    PYTHON: "C:\\Python36"
+    PYTHON_VERSION: "3.6.5"
+
+install:
+  # Install the specific Python version as dependency
+  - ps: if (-not(Test-Path($env:PYTHON))) { & appveyor\install.ps1 }
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - "python --version"
+
+build_script:
+  # Environment setup
+  - python scripts/install_deps.py # TODO: Should not depend on Python version
+  - scripts/set_watcom.bat
+  # Build
+  - wmake

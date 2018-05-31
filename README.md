@@ -1,6 +1,7 @@
 # BDGL DOS Game Library
 
 [![Build Status](https://travis-ci.org/balintkiss501/BDGL.svg?branch=master)](https://travis-ci.org/balintkiss501/BDGL)
+[![Build status](https://ci.appveyor.com/api/projects/status/coi6pp6gmaaq6ctj/branch/master?svg=true)](https://ci.appveyor.com/project/balintkiss501/bdgl)
 
 ## Introduction
 
