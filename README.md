@@ -1,4 +1,9 @@
 # BDGL DOS Game Library
+
+[![Build Status](https://travis-ci.org/balintkiss501/BDGL.svg?branch=master)](https://travis-ci.org/balintkiss501/BDGL)
+
+## Introduction
+
 A work-in-progress C library for DOS game programming, currently containing DOS
 graphics-related functions and has an API reminiscent of SDL. 16-bit programs
 compiled with a Open Watcom and linked with this library work under DOSBox.
