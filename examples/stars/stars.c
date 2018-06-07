@@ -126,24 +126,24 @@ void update()
   int i;
 
   BDGL_KeyScancode key = BDGL_GetScancode();
-  if (key == BDGL_SCAN_ESC)
+  if (key == BDGL_KEY_SCAN_ESC)
   {
     running = BDGL_FALSE;
     return;
   }
-  if (key == BDGL_SCAN_UP || key == BDGL_SCAN_W)
+  if (key == BDGL_KEY_SCAN_UP || key == BDGL_KEY_SCAN_W)
   {
     player.rect.y -= SHIP_SPEED;
   }
-  else if (key == BDGL_SCAN_DOWN || key == BDGL_SCAN_S)
+  else if (key == BDGL_KEY_SCAN_DOWN || key == BDGL_KEY_SCAN_S)
   {
     player.rect.y += SHIP_SPEED;
   }
-  if (key == BDGL_SCAN_LEFT || key == BDGL_SCAN_A)
+  if (key == BDGL_KEY_SCAN_LEFT || key == BDGL_KEY_SCAN_A)
   {
     player.rect.x -= SHIP_SPEED;
   }
-  else if (key == BDGL_SCAN_RIGHT || key == BDGL_SCAN_D)
+  else if (key == BDGL_KEY_SCAN_RIGHT || key == BDGL_KEY_SCAN_D)
   {
     player.rect.x += SHIP_SPEED;
   }

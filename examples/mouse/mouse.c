@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   BDGL_InitializeMouse();
 
   /* Loop until ESC key on keyboard is pressed */
-  while (key != BDGL_SCAN_ESC)
+  while (key != BDGL_KEY_SCAN_ESC)
   {
     /* Event handling */
     key = BDGL_GetScancode();

@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
       printf("%c %d\n", key, key);
     }
 
-    if (key == BDGL_SCAN_ESC)
+    if (key == BDGL_KEY_SCAN_ESC)
     {
       running = BDGL_FALSE;
     }
