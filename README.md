@@ -3,6 +3,11 @@
 [![Build Status](https://travis-ci.org/balintkiss501/BDGL.svg?branch=master)](https://travis-ci.org/balintkiss501/BDGL)
 [![Build status](https://ci.appveyor.com/api/projects/status/coi6pp6gmaaq6ctj/branch/master?svg=true)](https://ci.appveyor.com/project/balintkiss501/bdgl)
 
+**NOTICE:**
+This library is in **pre-release** state. The API is being experimented on and
+is subject to constant changes during this phase that could break the code
+compatibility of client applications using the library.
+
 ## Introduction
 
 A work-in-progress C library for DOS game programming, currently containing DOS
@@ -11,14 +16,29 @@ compiled with a Open Watcom and linked with this library work under DOSBox.
 The currently supported DOS compiler is Open Watcom 1.9 and
 Open Watcom V2 on Windows and Linux.
 
-## Current features
+## Features
 
-* 256 color 320x240 VGA mode with optional VSync and Double Buffering
-* Drawing of primitives, like points, lines and rectangles
-* BMP image loading
-* Palette manipulation
-* Keyboard input handling
-* Mouse input handling
+### Current features
+
+- [x] 256 color 320x240 VGA mode with optional VSync and Double Buffering
+- [x] Drawing of primitives, like points, lines and rectangles
+- [x] BMP image support
+- [x] Palette manipulation
+- [x] Keyboard input handling
+- [x] Mouse input handling
+
+### Planned features
+
+- [ ] Buffered keyboard input
+- [ ] Joystick handling
+- [ ] Other video modes like CGA, TGA, EGA and SVGA
+- [ ] Circle drawing
+- [ ] PCX image support
+- [ ] 2D sprite framework
+- [ ] State management framework
+- [ ] PC speaker sound
+- [ ] Sound Blaster 16 sound
+- [ ] 3D math library and rendering
 
 ## Building
 
