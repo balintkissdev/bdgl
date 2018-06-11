@@ -57,7 +57,8 @@ extern "C" {
  * @{
  */
 
-#define BDGL_KEY_SCAN_ESC           (1)
+#define BDGL_KEY_SCAN_NONE          (0)
+#define BDGL_KEY_SCAN_ESCAPE        (1)
 #define BDGL_KEY_SCAN_1             (2)
 #define BDGL_KEY_SCAN_2             (3)
 #define BDGL_KEY_SCAN_3             (4)
@@ -144,31 +145,34 @@ extern "C" {
 
 /** @} */
 
-/*
- * FIXME: Keyboard recognition is not continous enough, need to implement
- *        buffered input.
- */
-BDGL_KeyScancode BDGL_GetScancode();
-#ifdef WATCOM
-#pragma aux BDGL_GetScancode =                                  \
-  "mov AH, 01h"     /* Function 1: Check if key is ready */     \
-  "int 16h"         /* BIOS interrupt */                        \
-  "jz empty"        /* No key was pressed, exit */              \
-  "mov AH, 00h"     /* Function 0: Acquire scancode */          \
-  "int 16h"         /* BIOS interrupt */                        \
-  "mov AL, AH"      /* Get result from AH to AL */              \
-                                                                \
-  "xor AH, AH"      /* Null out AH */                           \
-  "jmp done"        /* Exit */                                  \
-                                                                \
-  "empty:"                                                      \
-  " xor AX, AX"     /* Null out AX */                           \
-                                                                \
-  "done:"
-#endif
 
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
+/**
+ * Typedef for the keyboard scancode.
+ */
+typedef BDGL_Uint8 BDGL_KeyScancode;
+
+typedef enum
+{
+  BDGL_KEY_RELEASED,
+  BDGL_KEY_PRESSED
+} BDGL_KeyStatus;
+
+/* TODO: Handle modifier keys */
+typedef struct BDGL_KeyEvent
+{
+  BDGL_KeyScancode key;
+  BDGL_KeyStatus status;
+} BDGL_KeyEvent;
+
+extern BDGL_KeyStatus BDGL_KeyboardMap[];
+
+void BDGL_InitializeKeyboard();
+
+void BDGL_CleanupKeyboard();
+
+BDGL_Bool BDGL_PollKeyboard(BDGL_KeyEvent *key_event);
+
+const char* BDGL_GetKeyName(BDGL_KeyEvent *key_event);
+
 
 #endif /* _BDGL_KEYBOARD_H_ */

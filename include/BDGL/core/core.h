@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Bálint Kiss <balint.kiss.501@gmail.com>
+ * Copyright (c) 2016 Balint Kiss <balint.kiss.501@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -27,5 +27,9 @@
 #include <BDGL/core/macros.h>
 #include <BDGL/core/math.h>
 #include <BDGL/core/types.h>
+
+BDGL_Bool BDGL_InitializeSystem();
+
+BDGL_Bool BDGL_CleanupSystem();
 
 #endif  /* _BDGL_CORE_H_ */

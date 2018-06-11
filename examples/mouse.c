@@ -29,13 +29,15 @@
  */
 int main(int argc, char *argv[])
 {
+  BDGL_Bool running = BDGL_TRUE;
+  BDGL_KeyEvent event;
   int mouse_x = 0;
   int mouse_y = 0;
-  BDGL_MouseButton key = 0;
   BDGL_Uint8 cursor_color = BDGL_WHITE;
   BDGL_Screen *screen = NULL;
 
-  /* Initialize screen */
+  BDGL_InitializeSystem();
+
   screen = BDGL_CreateScreen(BDGL_MODE_VGA_320x200_256_COLOR);
   if (!screen)
   {
@@ -44,15 +46,18 @@ int main(int argc, char *argv[])
   }
   BDGL_EnableScreenOption(screen, BDGL_SCREEN_VSYNC | BDGL_SCREEN_DOUBLE_BUFFER);
   BDGL_InitializeVideo(screen);
-
-  /* Initialize mouse */
   BDGL_InitializeMouse();
 
   /* Loop until ESC key on keyboard is pressed */
-  while (key != BDGL_KEY_SCAN_ESC)
+  while (running)
   {
     /* Event handling */
-    key = BDGL_GetScancode();
+    if (BDGL_PollKeyboard(&event))
+    {
+      running = BDGL_FALSE;
+      break;
+    }
+
     BDGL_GetMouseAbsPos(&mouse_x, &mouse_y);
 
     /* Logic update */
@@ -70,12 +75,13 @@ int main(int argc, char *argv[])
 
     BDGL_SetDrawColor(screen, cursor_color);
     BDGL_DrawPoint2D(screen, mouse_x, mouse_y);
-    
+
     BDGL_UpdateScreen(screen);
   }
 
   /* Free screen resources */
   BDGL_DestroyScreen(screen);
+  BDGL_CleanupSystem();
 
   printf("Done\n");
   return 0;

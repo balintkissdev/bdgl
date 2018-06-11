@@ -33,7 +33,7 @@ extern "C" {
  * @addtogroup DOS Video Modes
  * Options for DOS video modes
  * @{
-*/
+ */
 
 /* Text display modes */
 

@@ -26,22 +26,28 @@
 int main(int argc, char* argv[])
 {
   BDGL_Bool running = BDGL_TRUE;
-  BDGL_KeyScancode key = 0;
+  BDGL_KeyEvent event;
+
+  BDGL_InitializeSystem();
 
   while (running)
   {
-    key = BDGL_GetScancode();
-    if (key)
+    if (BDGL_PollKeyboard(&event))
     {
-      printf("%c %d\n", key, key);
-    }
+			printf("%s is %s (0x%0x %d)\n",
+            BDGL_GetKeyName(&event),
+						event.status == BDGL_KEY_PRESSED ? "PRESSED" : "RELEASED",
+						event.key,
+            event.key);
 
-    if (key == BDGL_KEY_SCAN_ESC)
-    {
-      running = BDGL_FALSE;
+      if (event.key == BDGL_KEY_SCAN_ESCAPE && event.status == BDGL_KEY_PRESSED)
+      {
+        running = BDGL_FALSE;
+      }
     }
   }
 
+  BDGL_CleanupSystem();
   printf("Done\n");
   return 0;
 }

@@ -34,6 +34,11 @@ extern "C" {
 #define BDGL_MOUSE_MIDDLE   (0x04)
 
 /**
+ * Typedef for the mouse button code.
+ */
+typedef BDGL_Uint8 BDGL_MouseButton;
+
+/**
  * Initialize mouse.
  *
  * This needs to be called before you want to use the mouse.

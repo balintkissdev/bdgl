@@ -96,14 +96,4 @@ typedef enum
   BDGL_TRUE = 1
 } BDGL_Bool;
 
-/**
- * Typedef for the keyboard scancode.
- */
-typedef BDGL_Uint8 BDGL_KeyScancode;
-
-/**
- * Typedef for the mouse button code.
- */
-typedef BDGL_Uint8 BDGL_MouseButton;
-
 #endif  /* _BDGL_TYPES_H_ */

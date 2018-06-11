@@ -55,6 +55,7 @@ typedef struct Spaceship
 int screen_width, screen_height;
 
 BDGL_Bool running;
+BDGL_KeyEvent key_event;
 
 BDGL_Screen *screen = NULL;
 
@@ -119,33 +120,39 @@ void initialize()
   BDGL_ModifyPaletteColor(1, 24, 24, 24);     /* dark grey */
   BDGL_ModifyPaletteColor(2, 48, 48, 48);     /* light grey */
   BDGL_ModifyPaletteColor(3, 63, 63, 63);     /* white */
+
+  BDGL_InitializeKeyboard();
 }
 
 void update()
 {
   int i;
 
-  BDGL_KeyScancode key = BDGL_GetScancode();
-  if (key == BDGL_KEY_SCAN_ESC)
+  if (BDGL_PollKeyboard(&key_event))
   {
-    running = BDGL_FALSE;
-    return;
+    if (key_event.key == BDGL_KEY_SCAN_ESCAPE && key_event.status == BDGL_KEY_PRESSED)
+    {
+      running = BDGL_FALSE;
+      return;
+    }
   }
-  if (key == BDGL_KEY_SCAN_UP || key == BDGL_KEY_SCAN_W)
-  {
-    player.rect.y -= SHIP_SPEED;
-  }
-  else if (key == BDGL_KEY_SCAN_DOWN || key == BDGL_KEY_SCAN_S)
-  {
-    player.rect.y += SHIP_SPEED;
-  }
-  if (key == BDGL_KEY_SCAN_LEFT || key == BDGL_KEY_SCAN_A)
+
+  if (BDGL_KeyboardMap[BDGL_KEY_SCAN_LEFT] == BDGL_KEY_PRESSED)
   {
     player.rect.x -= SHIP_SPEED;
   }
-  else if (key == BDGL_KEY_SCAN_RIGHT || key == BDGL_KEY_SCAN_D)
+  else if (BDGL_KeyboardMap[BDGL_KEY_SCAN_RIGHT] == BDGL_KEY_PRESSED)
   {
     player.rect.x += SHIP_SPEED;
+  }
+
+  if (BDGL_KeyboardMap[BDGL_KEY_SCAN_UP] == BDGL_KEY_PRESSED)
+  {
+    player.rect.y -= SHIP_SPEED;
+  }
+  else if (BDGL_KeyboardMap[BDGL_KEY_SCAN_DOWN] == BDGL_KEY_PRESSED)
+  {
+    player.rect.y += SHIP_SPEED;
   }
 
   /* For each star... */
@@ -191,6 +198,7 @@ void cleanup()
 {
   /* Free screen resources */
   BDGL_DestroyScreen(screen);
+  BDGL_CleanupKeyboard();
 
   printf("Done\n");
 }
