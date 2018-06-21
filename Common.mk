@@ -11,11 +11,8 @@ SCRIPT_EXTENSION =bat   # Mind the lack of space
 
 ####### Compiler, flags and options
 
-SYSTEM_DOS16 = DOS
-SYSTEM_DOS32 = DOS4G
-
-CC_DOS16 = wcl -cc
-CC_DOS32 = wcl386 -cc
+CC_DOS16 = wcc
+CC_DOS32 = wcc386
 
 CPPFLAGS = -I$(INCLUDE_DIR) -DWATCOM
 
@@ -38,19 +35,31 @@ CFLAGS_OPTIMIZE_DOS32_486 = $(CFLAGS_OPTIMIZE_BASIC) -4 -fp3
 CFLAGS_OPTIMIZE_DOS32_PENTIUM = $(CFLAGS_OPTIMIZE_BASIC) -5 -fp5
 CFLAGS_OPTIMIZE_DOS32_PENTIUM_PRO = $(CFLAGS_OPTIMIZE_BASIC) -6 -fp6
 
-CFLAGS_DOS16 = $(CFLAGS) -l=$(SYSTEM_DOS16) $(CFLAGS_OPTIMIZE_DOS16_8086)
-CFLAGS_DOS32 = $(CFLAGS) -l=$(SYSTEM_DOS32) $(CFLAGS_OPTIMIZE_DOS32_386)
+CFLAGS_DOS16 = $(CFLAGS) $(CFLAGS_OPTIMIZE_DOS16_8086)
+CFLAGS_DOS32 = $(CFLAGS) $(CFLAGS_OPTIMIZE_DOS32_386)
 
-LIBUTIL = wlib
+# TODO: Write build configuration script instead of building both 16- and
+#       32-bit binaries at the same time.
+# TODO: Use implicit build rules. This can be done when build configuration can
+#       be separated.
+C_TO_OBJ16 = $(CC_DOS16) $(CPPFLAGS) $(CFLAGS_DOS16) $[* -fo=$@ -fr=$*.err
+C_TO_OBJ32 = $(CC_DOS32) $(CPPFLAGS) $(CFLAGS_DOS32) $[* -fo=$@ -fr=$*.err
 
-# Target library directory
+OBJ_DIR = build         		# Intermediate build directory
+
+OBJ_DOS16_DIR = $(OBJ_DIR)$(SEP)dos16
+OBJ_DOS32_DIR = $(OBJ_DIR)$(SEP)dos32
+
 LIB_DIR = lib
-
+LIBUTIL = wlib
 LIB_DOS16_DIR = $(LIB_DIR)$(SEP)dos16
 LIB_DOS32_DIR = $(LIB_DIR)$(SEP)dos32
-
 LIB_DOS16_TARGET = $(LIB_DOS16_DIR)$(SEP)BDGL.lib
 LIB_DOS32_TARGET = $(LIB_DOS32_DIR)$(SEP)BDGL.lib
+LINK_LIB_CMD = $(LIBUTIL) -n $@ $<
+
+BIN_DIR = bin
+LD = wlink
 
 # Platform-independent file operation commands
 # TODO: Can you make it that Makefile prints the commands of the scripts
