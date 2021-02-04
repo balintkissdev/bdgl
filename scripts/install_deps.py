@@ -23,6 +23,7 @@
 
 
 # TODO: Have option for obtaining Open Watcom V2 source
+# TODO: Clean up code
 
 
 import argparse
@@ -32,6 +33,7 @@ import shutil
 import stat
 import sys
 import urllib.request
+import tarfile
 import zipfile
 
 
@@ -51,6 +53,7 @@ class Package:
     name                -- Name of the package to identify with.
     url                 -- URL of the package to download from.
     long_name           -- Long name to display in descriptions.
+    extension           -- Extension of compressed package, like .zip or .tar.gz.
     post_unpack_command -- Additional command to execute after unpacking.
                            (optional)
     description         -- Package description to display in the help menu.
@@ -61,11 +64,13 @@ class Package:
                            the contents of the package are not organized under
                            a package root folder. (default False)
     """
+
     def __init__(
             self,
             name,
             url,
             long_name,
+            extension,
             post_unpack_command=None,
             description="",
             extracted_name="",
@@ -74,6 +79,7 @@ class Package:
         self.name = name
         self.url = url
         self.long_name = long_name
+        self.extension = extension
         self.post_unpack_command = post_unpack_command
         self.description = description
         self.extracted_name = extracted_name
@@ -83,10 +89,10 @@ class Package:
 def post_open_watcom_v2_unpack_command(package, path):
     # chmod u+x on Watcom binaries if under Linux/Unix
     if (
-            sys.platform.startswith('linux') or
-            sys.platform.startswith('freebsd') or
-            'darwin' == sys.platform
-       ):
+        sys.platform.startswith('linux') or
+        sys.platform.startswith('freebsd') or
+        'darwin' == sys.platform
+    ):
         x86_bindir = path + '/binl/'
         x86_executable_list = os.listdir(x86_bindir)
         for executable_name in x86_executable_list:
@@ -112,20 +118,22 @@ def post_open_watcom_v2_unpack_command(package, path):
 
 PACKAGE_WATCOM_V2 = Package(
     name='open-watcom-v2',
-    url="https://github.com/open-watcom/travis-ci-ow-builds/archive/"
-        "master.zip",
+    url="https://github.com/open-watcom/open-watcom-v2/releases/download/Current-build/ow-snapshot.tar.gz",
     long_name="Open Watcom V2 C/C++ compiler suite",
+    extension='.tar.gz',
     post_unpack_command=post_open_watcom_v2_unpack_command,
     description="This is the C/C++ compiler used to build the library for "
                 "16- and 32-bit DOS targets. It's the binary release, so you "
                 "won't have to build the compiler itself.",
-    extracted_name="travis-ci-ow-builds-master"
+    extracted_name="open-watcom-v2",
+    bomb=True
 )
 
 PACKAGE_DOS32A = Package(
     name='dos32a',
     url="http://download.narechk.net/dos32a-912-bin.zip",
     long_name="DOS32/A DOS extender",
+    extension='.zip',
     description="This is the DOS extender used to execute 32-bit applications "
                 "on DOS.",
     bomb=True
@@ -197,7 +205,7 @@ def install(package, force=False):
     if force:
         try:
             log_package(package, "Force install: removing...")
-            os.remove(os.path.join(DEPS_DIR, package.name + ".zip"))
+            os.remove(os.path.join(DEPS_DIR, package.name + package.extension))
             shutil.rmtree(os.path.join(DEPS_DIR, package.name))
             log_package(package, "Removing completed.")
         except OSError as e:
@@ -218,9 +226,8 @@ def download(package):
     package -- Package object to download.
     """
     # TODO: Show a progressbar
-    # TODO: Allow more formats than .zip
     log_package(package, "Downloading from " + package.url)
-    downloaded_file = os.path.join(DEPS_DIR, package.name + ".zip")
+    downloaded_file = os.path.join(DEPS_DIR, package.name + package.extension)
 
     urllib.request.urlretrieve(package.url, downloaded_file)
 
@@ -235,18 +242,22 @@ def extract(package):
     """
     log_package(package, "Extracting files...")
 
-    # TODO: Handle more extensions than .zip
-    zip_file = zipfile.ZipFile(os.path.join(
-        DEPS_DIR, package.name + ".zip"), 'r')
-
     package_path = os.path.join(DEPS_DIR, package.name)
     if package.bomb:
         unpack_path = package_path
     else:
         unpack_path = DEPS_DIR
 
-    zip_file.extractall(unpack_path)
-    zip_file.close()
+    if package.extension == '.zip':
+        zip_file = zipfile.ZipFile(package_path + package.extension, 'r')
+        zip_file.extractall(unpack_path)
+        zip_file.close()
+    elif package.extension == '.tar.gz':
+        tar_file = tarfile.open(package_path + package.extension, 'r:gz')
+        tar_file.extractall(unpack_path)
+        tar_file.close()
+    else:
+        log_package(package, "Unsupported package format!", ConsoleColors.FAIL)
 
     if '' != package.extracted_name:
         extracted_file = os.path.join(DEPS_DIR, package.extracted_name)

@@ -44,7 +44,7 @@ Open Watcom V2 on Windows and Linux.
 
 The recommended compiler to use is the recent Open Watcom V2 compiler, although
 Open Watcom 1.9 is also supported. You can download the binary release
-from https://github.com/open-watcom/travis-ci-ow-builds/archive/master.zip
+from https://github.com/open-watcom/open-watcom-v2/releases/download/Current-build/ow-snapshot.tar.gz
 and extract it somewhere, but better yet, you can use the bundled
 `install_deps.py` script under the `scripts` folder to download and extract
 inside a `deps` folder in the project.
