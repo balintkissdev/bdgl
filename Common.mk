@@ -16,7 +16,7 @@ CC_DOS32 = wcc386
 
 CPPFLAGS = -I$(INCLUDE_DIR) -DWATCOM
 
-CFLAGS = -we -w4 -zq -ml
+CFLAGS = -w4 -zq -ml
 
 CFLAGS_OPTIMIZE_BASIC = -oneatx -oh -ei -zp8
 
