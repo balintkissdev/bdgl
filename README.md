@@ -23,12 +23,11 @@ Open Watcom V2 on Windows and Linux.
 - [x] Drawing of primitives, like points, lines and rectangles
 - [x] BMP image support
 - [x] Palette manipulation
-- [x] Keyboard input handling
+- [x] Buffered keyboard input handling
 - [x] Mouse input handling
 
 ### Planned features
 
-- [ ] Buffered keyboard input
 - [ ] Joystick handling
 - [ ] Other video modes like CGA, TGA, EGA and SVGA
 - [ ] Circle drawing
