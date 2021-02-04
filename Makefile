@@ -6,6 +6,7 @@ INCLUDE_DIR = include   	# Public header directory
 
 # TODO: Ordering of the targets and !include directives matters. Figure out
 #       why.
+.ERASE	# Stop prompting if target should be deleted when error occours, because it hangs the execution in bash.
 all : $(LIB_DOS16_TARGET) $(LIB_DOS32_TARGET) examples
 
 lib_dos16 : $(LIB_DOS16_TARGET)
