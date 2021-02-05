@@ -1,11 +1,12 @@
-# BDGL DOS Game Library
+# Bálint's DOS Game Library
 
 ![Build](https://github.com/balintkissdev/bdgl/workflows/Build/badge.svg)
 
 **NOTICE:**
 This library is in **pre-release** state. The API is being experimented on and
 is subject to constant changes during this phase that could break the code
-compatibility of client applications using the library.
+compatibility of client applications using the library. Do not rely on the
+stability of API until first version is released.
 
 ## Introduction
 
@@ -14,6 +15,8 @@ graphics-related functions and has an API reminiscent of SDL. 16-bit programs
 compiled with a Open Watcom and linked with this library work under DOSBox.
 The currently supported DOS compiler is Open Watcom 1.9 and
 Open Watcom V2 on Windows and Linux.
+
+For more resources on game programming for DOS, check out the [awesome-dos](https://github.com/balintkissdev/awesome-dos) list.
 
 ## Features
 
@@ -50,7 +53,7 @@ inside a `deps` folder in the project.
 1. Clone this repository with Git and enter the project folder.
 
    ```bash
-   git clone https://github.com/balintkiss501/bdgl
+   git clone https://github.com/balintkissdev/bdgl
    cd bdgl
    ```
 
@@ -108,14 +111,3 @@ dosbox yourprogram.exe
 a DOS Extender. One such as DOS/32A can be downloaded from
 http://dos32a.narechk.net. However, executing programs compiled with 32-bit
 BDGL is currently not supported.
-
-## References:
-
-* ftp://ftp.openwatcom.org/pub/manuals/current/cguide.pdf
-* ftp://ftp.openwatcom.org/manuals/current/tools.pdf
-* http://www.brackeen.com/vga/
-* http://www.wagemakers.be/english/doc/vga
-* http://www.columbia.edu/~em36/wpdos/videomodes.txt
-* http://tuttlem.github.io/2015/10/04/building-libraries-using-open-watcom.html
-* http://tuttlem.github.io/2015/10/04/inline-assembly-with-watcom.html
-* http://flipcode.com/demomaking
