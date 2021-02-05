@@ -61,17 +61,21 @@ inside a `deps` folder in the project.
    python3 scripts/install_deps.py
    ```
 
-3. Set the Watcom environment using `scripts/set_watcom.sh` if you are under
-   Linux/Unix/MSYS/Cygwin or `set_watcom.bat` if you are under Windows.
+3. Set the Watcom build environment according to the operating system and shell you use.
 
    ```bash
-   # If under Linux/Unix/MSYS/Cygwin
+   # Linux/Unix/MSYS/Cygwin
    source scripts/set_watcom.sh
    ```
 
-   ```bash
-   # If under Windows command line
-   scripts/set_watcom.bat
+   ```powershell
+   # Windows command line (CMD)
+   scripts\set_watcom.bat
+   ```
+
+   ```powershell
+   # Powershell
+   Unblock-File -Path scripts\set_watcom.ps1; scripts\set_watcom.ps1
    ```
 
 4. Build the library using `wmake`. This will build the linkable static

@@ -6,17 +6,13 @@ on:
     branches: [master]
   workflow_dispatch:
 
+# At the time of writing, there's unfortunately no matrix feature for running
+# across multiple shells in one OS.
 jobs:
-  build:
-    name: Build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          - windows-latest
-
-    steps:
+  build_bash:
+    name: Build (Linux bash)
+    runs-on: ubuntu-latest
+    steps: 
       - uses: actions/checkout@v2
         with:
           fetch_depth: 0
@@ -27,12 +23,39 @@ jobs:
         run: |
           chmod -R u+x scripts
           python scripts/install_deps.py
-      - name: Build library (Linux)
-        if: matrix.os == 'ubuntu-latest'
+      - name: Build library (Linux bash)
         run: |
           source scripts/set_watcom.sh
           wmake
-      - name: Build library (Windows)
-        if: matrix.os == 'windows-latest'
-        shell: cmd  # TODO: Add support for PowerShell
+
+  build_cmd:
+    name: Build (Windows CMD)
+    runs-on: windows-latest
+    steps: 
+      - uses: actions/checkout@v2
+        with:
+          fetch_depth: 0
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: python scripts\install_deps.py
+      - name: Build library (Windows CMD)
+        shell: cmd
         run: scripts\set_watcom.bat && wmake
+
+  build_powershell:
+    name: Build (Windows Powershell)
+    runs-on: windows-latest
+    steps: 
+      - uses: actions/checkout@v2
+        with:
+          fetch_depth: 0
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: python scripts\install_deps.py
+      - name: Build library (Windows Powershell)
+        shell: powershell
+        run: Unblock-File -Path scripts\set_watcom.ps1; scripts\set_watcom.ps1; wmake
